@@ -16,10 +16,7 @@ df = pd.read_csv(f"{path}/soft_drink_sales.csv")
 df["Purchase Date"] = pd.to_datetime(df["Purchase Date"])
 df_energydrinks = df[df["Product"] == "Energy Drink"]
 
-
-# df2 = pd.read_csv("data/geoMap.csv")
-# df_trends = df2
-# print(df_trends.head())
+brands = sorted(df_energydrinks["Company"].unique())
 
 # sorted list of state names
 states = sorted(df_energydrinks["Customer State"].unique())
@@ -44,6 +41,17 @@ layout = html.Div([
                 html.H4("Unit Sales"),
                 html.P("Use dropdown to visualize state energy drink sales by quarter."),
             ], color = "secondary"),
+            
+            html.Div([
+                html.Label("Select Brands:"),
+                dcc.Checklist(
+                    id="company-checklist",
+                    options=[{"label": brand, "value": brand} for brand in brands],
+                    value=brands,  # All selected by default
+                    inline=True,
+                    style={"marginBottom": "20px"}
+                ),
+            ], style={"marginBottom": "20px"}),
                 
             dcc.Graph(id = "units-sold-graph"),
                 
@@ -54,18 +62,7 @@ layout = html.Div([
                 ], style = {"marginBottom": "0px"}))
             )
                 
-        ]),
-        
-        dbc.Col([
-            
-                dbc.Alert([
-                    html.H4("Google Search Trends"),
-                    html.P("Due to the limited quantity of sales data available from the dataset, Google Trends data can provide more insight into the popularity of energy drinks in the US.")
-                ], color="secondary"),
-                
-                # dcc.Graph(id="trends-graph")
-       
-        ])
+        ], width = 6)
         
     ], justify = "center", align = "start"),
     
@@ -73,35 +70,27 @@ layout = html.Div([
 
 @callback(
     Output("units-sold-graph", "figure"),
-    # Output("trends-graph", "figure"),
-    Input("state-dropdown", "value")
+    Input("state-dropdown", "value"),
+    Input("company-checklist", "value")
 )
 
-def update_graphs(state):
-    # Sales bar plot (unchanged)
-    filtered = df_energydrinks[df_energydrinks["Customer State"] == state].copy()
+def update_graphs(state, selected_brands):
+    filtered = df_energydrinks[
+        (df_energydrinks["Customer State"] == state) &
+        (df_energydrinks["Company"].isin(selected_brands))
+    ].copy()
     filtered["Period"] = filtered["Purchase Date"].dt.to_period("Q").astype(str)
-    grouped = filtered.groupby("Period", as_index=False)["Units Sold"].sum()
+    grouped = filtered.groupby(["Period", "Company"], as_index=False)["Units Sold"].sum()
     fig_sales = px.bar(
         grouped,
         x="Period",
         y="Units Sold",
+        color="Company",
+        barmode="group",
         title=f"Energy Drink Units Sold Per Quarter in {state}"
     )
     fig_sales.update_layout(xaxis_title="Period", yaxis_title="Units Sold")
-
-    # Google Trends bar plot (updated column names)
-    # popularity_col = [col for col in df_trends.columns if col != "Region"][0]  # Automatically get the popularity column
-    # filtered_trends = df_trends[df_trends["Region"] == state]
-    # fig_trends = px.bar(
-    #     filtered_trends,
-    #     x="Region",
-    #     y=popularity_col,
-    #     title=f"Google Search Popularity for 'Energy Drink' in {state} (last 5 years)"
-    # )
-    # fig_trends.update_layout(xaxis_title="State", yaxis_title="Popularity")
-
-    return fig_sales#, fig_trends
+    return fig_sales
 
 
 # AI Assistance: used ChatGPT to help brainstorming how to
