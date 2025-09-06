@@ -93,3 +93,4 @@ def update_map_trends(kw_list, selected_year):
             className="d-flex align-items-center",
         )
     
+# add end notes with sources
