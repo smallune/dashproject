@@ -3,4 +3,4 @@ from dash import html
 
 dash.register_page(__name__, path = "/page3", name = "Demographics")
 
-layout = html.Div()
+layout = html.Div(html.H2("Demographic Data", className = "centered-header"))

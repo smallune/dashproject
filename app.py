@@ -4,7 +4,7 @@ import dash_bootstrap_components as dbc
 
 # initialize app
 app = Dash(__name__, use_pages = True, suppress_callback_exceptions = True,
-           external_stylesheets = [dbc.themes.BOOTSTRAP], title = "Caffeine Drink Impacts")
+           external_stylesheets = [dbc.themes.YETI], title = "Caffeine Drink Impacts")
 server = app.server # for deployment
 
 app.layout = html.Div([
