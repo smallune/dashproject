@@ -75,9 +75,9 @@ layout = html.Div(
    # return reaction_counts
 
 #Chart 
-def updated_barchart(selected_brand):
-    filtered_df = filtered_df[filtered_df["name_brand"] == selected_brand]
-    reactions_per_year = filtered_df.groupby("year")["reactions"].count().reset_index()
+def updated_barchart(selected_brand, filtered_df):
+    brand_df = filtered_df[filtered_df["name_brand"] == selected_brand]
+    reactions_per_year = brand_df.groupby("year")["reactions"].count().reset_index()
     figure = px.bar(
         reactions_per_year,
         x="year",
@@ -100,8 +100,9 @@ def updated_barchart(selected_brand):
 )
 
 def update_graph(selected_brand):
-    return updated_barchart(selected_brand)
+    return updated_barchart(selected_brand, filtered_df)
 
+print(filtered_df.head(10))
 
 #add end notes with source
             
