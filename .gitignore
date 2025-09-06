@@ -1,2 +1,3 @@
-"__pycache__/" 
-"*.pyc" 
+# ignore Python cache
+__pycache__/
+*.py[cod]

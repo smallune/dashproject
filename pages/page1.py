@@ -18,7 +18,6 @@ df_energydrinks = df[df["Product"] == "Energy Drink"]
 
 # sorted list of state and brand names for vizualization
 states = sorted(df_energydrinks["Customer State"].unique())
-brands = sorted(df_energydrinks["Company"].unique())
 
 layout = html.Div([
     
@@ -29,7 +28,7 @@ layout = html.Div([
         options = [{"label": state, "value": state} for state in states],
         value = states[0],
         clearable = False,
-        style = {"width": "50%", "margin": "0 auto", "marginBottom": "20px"}
+        style = {"width": "50%", "margin": "0 auto", "marginBottom": "40px"}
     ),
     
     dbc.Row([
@@ -41,24 +40,13 @@ layout = html.Div([
                 html.P("Use dropdown to visualize state energy drink sales by quarter."),
             ], color = "secondary"),
             
-            html.Div([
-                html.Label("Select Brand: "),
-                dcc.RadioItems(
-                    id = "company-radio",
-                    options = [{"label": brand, "value": brand} for brand in ["Coca-Cola", "Pepsi"]],
-                    value = "Coca-Cola",
-                    inline = True,
-                    style = {"marginBottom": "20px"}
-                ),
-            ], style = {"marginBottom": "20px"}),
-                
             dcc.Graph(id = "units-sold-graph"),
                 
             dbc.Card(
                 dbc.CardBody(html.P([
                     "Sales data sourced from Kaggle. ",
                     html.A("View Dataset", href = "https://www.kaggle.com/datasets/prasadahirekar/soft-drink-sales", target="_blank")
-                ], style = {"marginBottom": "0px"}))
+                ], style = {"textAlign": "center", "marginTop": "20px", "fontSize": "14px"}))
             )
                 
         ], width = 8)
@@ -70,33 +58,23 @@ layout = html.Div([
 @callback(
     Output("units-sold-graph", "figure"),
     Input("state-dropdown", "value"),
-    Input("company-radio", "value")
 )
 
-def update_graphs(state, brand):
+def update_graphs(state):
     
-    filtered = df_energydrinks[(df_energydrinks["Customer State"] == state) & (df_energydrinks["Company"] == brand)].copy()
-    
+    filtered = df_energydrinks[df_energydrinks["Customer State"] == state].copy()
     filtered["Period"] = filtered["Purchase Date"].dt.to_period("Q").astype(str)
-    grouped = filtered.groupby(["Period", "Company"], as_index = False)["Units Sold"].sum()
+    grouped = filtered.groupby("Period", as_index = False)["Units Sold"].sum()
     
     sales = px.bar(
         grouped,
         x = "Period",
         y = "Units Sold",
-        color = "Company",
-        barmode = "group",
         title = f"Energy Drink Units Sold Per Quarter in {state}"
     )
     
-    #sales.update_layout(xaxis_title = "Period", yaxis_title = "Units Sold")
-    
-    sales.update_layout(
-        xaxis_title = "Period",
-        yaxis_title = "Units Sold",
-        bargap = 0,  # smaller gap = wider bars (try 0.05 or 0)
-    )
-    
+    sales.update_layout(xaxis_title="Period", yaxis_title="Units Sold")
+
     return sales
 
 

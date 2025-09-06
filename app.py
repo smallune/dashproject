@@ -12,8 +12,8 @@ app.layout = html.Div([
         children = [
             dbc.NavLink("Home", href = "/", active = "exact"),
             dbc.NavLink("Sales", href = "/page1", active = "exact"),
-            dbc.NavLink("Health Effects", href = "/page2", active = "exact"),
             dbc.NavLink("Demographics", href = "/page3", active = "exact"),
+            dbc.NavLink("Health Effects", href = "/page2", active = "exact"),
             dbc.NavLink("About us", href = "/page4", active = "exact")
         ], 
         brand = "Drink App"
