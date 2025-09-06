@@ -1,5 +1,6 @@
 from dash import html, dcc, Input, Output, callback, register_page
 import pandas as pd
+import dash_bootstrap_components as dbc
 import plotly.express as px
 from pathlib import Path
 from pytrends.request import TrendReq
@@ -7,9 +8,9 @@ from pytrends.request import TrendReq
 register_page(__name__, path = '/page3', name = 'Demographics')
 
 pytrends = TrendReq(hl='en-US', tz=360)
+
 # Get US region mapping data
-## Downloaded from https://gist.github.com/rogerallen/1583593
-# need to modify
+## Downloaded from https://gist.github.com/rogerallen/1583593 then save to csv file
 DataPath = Path(__file__).resolve().parent.parent / 'data' / 'us_region_mapping.csv'
 df_us_region_mapping = pd.read_csv(DataPath)
 
@@ -48,7 +49,7 @@ layout = html.Div(
 )
 
 def update_map_trends(kw_list, selected_year):
-    # get data from Google Trends
+    # Get data from Google Trends
     # Specify the timeframe from the selected year with slider
     time_range = f'{selected_year}-01-01 {selected_year}-12-31'
     try:
@@ -81,6 +82,14 @@ def update_map_trends(kw_list, selected_year):
         return dcc.Graph(figure=fig)
     except Exception as e:
         # Catch any other unexpected errors
-        error_message = f"An unexpected error occurred: {e}"
-        return html.P(error_message, style={'color': 'red'})
+        error_message = f"An unexpected error occurred: {e}. Please try again later or change network."
+        # return html.P(error_message, style={'color': 'red'})
+        return dbc.Alert(
+            [
+                html.I(className="bi bi-x-octagon-fill me-2"),
+                error_message,
+            ],
+            color="danger",
+            className="d-flex align-items-center",
+        )
     
