@@ -17,7 +17,7 @@ layout = html.Div([
             "Page 2: Health effects (TODO).",
             html.Br(),
             "Page 3: Demographics (TODO)."
-        ])
-    ], className = "centered-paragraph")
+        ], className = "centered-paragraph")
+    ])
 
 ])
