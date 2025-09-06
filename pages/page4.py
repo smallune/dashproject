@@ -22,6 +22,11 @@ layout = html.Div(
                                     "make up the bulk of the card's content.",
                                     className="card-text",
                                 ),
+                                html.A(
+                                    html.Button('Contact Us', id='email-button'),  # The button itself
+                                    href='mailto:your_email@example.com?subject=Inquiry from Dash App&body=Hello,',
+                                    target='_blank'  # Opens the email client in a new tab/window
+                                ),
                                 dbc.Button("Email me", color="primary"),
                             ]
                         ),
