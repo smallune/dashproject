@@ -3,6 +3,11 @@
     padding: 16px;
 }
 
+.centered-header {
+    text-align: center;
+    padding: 24px;
+}
+
 .page-padding {
     padding: 40px 60px;
 }
