@@ -16,10 +16,9 @@ df = pd.read_csv(f"{path}/soft_drink_sales.csv")
 df["Purchase Date"] = pd.to_datetime(df["Purchase Date"])
 df_energydrinks = df[df["Product"] == "Energy Drink"]
 
-brands = sorted(df_energydrinks["Company"].unique())
-
-# sorted list of state names
+# sorted list of state and brand names for vizualization
 states = sorted(df_energydrinks["Customer State"].unique())
+brands = sorted(df_energydrinks["Company"].unique())
 
 layout = html.Div([
     
@@ -43,26 +42,26 @@ layout = html.Div([
             ], color = "secondary"),
             
             html.Div([
-                html.Label("Select Brands:"),
-                dcc.Checklist(
-                    id="company-checklist",
-                    options=[{"label": brand, "value": brand} for brand in brands],
-                    value=brands,  # All selected by default
-                    inline=True,
-                    style={"marginBottom": "20px"}
+                html.Label("Select Brand: "),
+                dcc.RadioItems(
+                    id = "company-radio",
+                    options = [{"label": brand, "value": brand} for brand in ["Coca-Cola", "Pepsi"]],
+                    value = "Coca-Cola",
+                    inline = True,
+                    style = {"marginBottom": "20px"}
                 ),
-            ], style={"marginBottom": "20px"}),
+            ], style = {"marginBottom": "20px"}),
                 
             dcc.Graph(id = "units-sold-graph"),
                 
             dbc.Card(
                 dbc.CardBody(html.P([
                     "Sales data sourced from Kaggle. ",
-                    html.A("View Dataset", href="https://www.kaggle.com/datasets/prasadahirekar/soft-drink-sales", target="_blank")
+                    html.A("View Dataset", href = "https://www.kaggle.com/datasets/prasadahirekar/soft-drink-sales", target="_blank")
                 ], style = {"marginBottom": "0px"}))
             )
                 
-        ], width = 6)
+        ], width = 8)
         
     ], justify = "center", align = "start"),
     
@@ -71,26 +70,34 @@ layout = html.Div([
 @callback(
     Output("units-sold-graph", "figure"),
     Input("state-dropdown", "value"),
-    Input("company-checklist", "value")
+    Input("company-radio", "value")
 )
 
-def update_graphs(state, selected_brands):
-    filtered = df_energydrinks[
-        (df_energydrinks["Customer State"] == state) &
-        (df_energydrinks["Company"].isin(selected_brands))
-    ].copy()
+def update_graphs(state, brand):
+    
+    filtered = df_energydrinks[(df_energydrinks["Customer State"] == state) & (df_energydrinks["Company"] == brand)].copy()
+    
     filtered["Period"] = filtered["Purchase Date"].dt.to_period("Q").astype(str)
-    grouped = filtered.groupby(["Period", "Company"], as_index=False)["Units Sold"].sum()
-    fig_sales = px.bar(
+    grouped = filtered.groupby(["Period", "Company"], as_index = False)["Units Sold"].sum()
+    
+    sales = px.bar(
         grouped,
-        x="Period",
-        y="Units Sold",
-        color="Company",
-        barmode="group",
-        title=f"Energy Drink Units Sold Per Quarter in {state}"
+        x = "Period",
+        y = "Units Sold",
+        color = "Company",
+        barmode = "group",
+        title = f"Energy Drink Units Sold Per Quarter in {state}"
     )
-    fig_sales.update_layout(xaxis_title="Period", yaxis_title="Units Sold")
-    return fig_sales
+    
+    #sales.update_layout(xaxis_title = "Period", yaxis_title = "Units Sold")
+    
+    sales.update_layout(
+        xaxis_title = "Period",
+        yaxis_title = "Units Sold",
+        bargap = 0,  # smaller gap = wider bars (try 0.05 or 0)
+    )
+    
+    return sales
 
 
 # AI Assistance: used ChatGPT to help brainstorming how to
