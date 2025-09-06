@@ -5,7 +5,7 @@ import os
 
 # initialize app
 app = Dash(__name__, use_pages = True, suppress_callback_exceptions = True,
-           external_stylesheets = [dbc.themes.YETI], title = "Caffeine Drink Impacts")
+           external_stylesheets = [dbc.themes.YETI], title = "Energy Drink Trends")
 server = app.server # for deployment
 
 app.layout = html.Div([
@@ -17,7 +17,7 @@ app.layout = html.Div([
             dbc.NavLink("Health Effects", href = "/page2", active = "exact"),
             dbc.NavLink("About us", href = "/page4", active = "exact")
         ], 
-        brand = "Drink App"
+        brand = "Energy Drink App"
     ),
     dash.page_container
 ])

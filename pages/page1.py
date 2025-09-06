@@ -35,10 +35,10 @@ layout = html.Div([
         
         dbc.Col([
             
-            dbc.Alert([
-                html.H4("Unit Sales"),
-                html.P("Use dropdown to visualize state energy drink sales by quarter."),
-            ], color = "secondary"),
+            # dbc.Alert([
+            #     html.H4("Unit Sales"),
+            #     html.P("Use dropdown to visualize state energy drink sales by quarter."),
+            # ], color = "secondary"),
             
             dcc.Graph(id = "units-sold-graph"),
                 
@@ -53,7 +53,7 @@ layout = html.Div([
         
     ], justify = "center", align = "start"),
     
-], className = "page-padding")
+], className = "swell page-padding")
 
 @callback(
     Output("units-sold-graph", "figure"),

@@ -3,11 +3,42 @@
     padding: 16px;
 }
 
-.centered-header {
+.centered-paragraph {
     text-align: center;
     padding: 24px;
 }
 
 .page-padding {
     padding: 40px 60px;
+}
+
+.swell {
+  animation: swell 0.6s ease-out forwards;
+}
+
+.info-card {
+  background-color: #F1F1F1;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.info-card:hover {
+  background-color: #EDEEF0;
+  transform: scale(1.03);
+}
+
+@keyframes swell {
+
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
 }
