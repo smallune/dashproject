@@ -4,10 +4,9 @@ import plotly.express as px
 from pathlib import Path
 from pytrends.request import TrendReq
 
-register_page(__name__, path = '/page4', name = 'Demographics')
+register_page(__name__, path = '/page3', name = 'Demographics')
 
 pytrends = TrendReq(hl='en-US', tz=360)
-
 # Get US region mapping data
 ## Downloaded from https://gist.github.com/rogerallen/1583593
 
@@ -71,7 +70,7 @@ def update_map_trends(kw_list, selected_year):
         scope = 'usa',
         color_continuous_scale = 'Reds',
         labels = {'price': 'Price (cents/kWh)'},
-        title = f'Interest in {search} over {selected_year} - from Google Trends'
+        title = f'Interest in {kw_list} over {selected_year} - from Google Trends'
     )
     fig.update_layout(
         geo = dict(bgcolor = '#336b64'), ## background color around map
