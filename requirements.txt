@@ -1,1 +1,21 @@
-dash numpy pandas shap plotly scikit-learn mysql-connector-python beautifulsoup4 matplotlib seaborn statsmodels requests jupyter ipykernel lxml gunicorn pathlib yfinance dash-bootstrap-components kagglehub pytrends
+dash
+numpy
+pandas
+shap
+plotly
+scikit-learn
+mysql-connector-python
+beautifulsoup4
+matplotlib
+seaborn
+statsmodels
+requests
+jupyter
+ipykernel
+lxml
+gunicorn
+pathlib
+yfinance
+dash-bootstrap-components
+kagglehub
+pytrends
