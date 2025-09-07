@@ -1,3 +1,6 @@
+/* AI Assistance: ChatGPT helped to write hovering and swelling effects. 
+CoPilot auto-complete function assisted with padding and margin dimensions. */
+
 .centered-header {
     text-align: center;
     padding: 16px;
@@ -17,11 +20,14 @@
 }
 
 .info-card {
-  background-color: #F1F1F1;
+  display: inline-block;
+  margin: 18px;
+  text-decoration: none;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 10px 20px;
+  background-color: #F1F1F1;
   transition: all 0.3s ease-in-out;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .info-card:hover {

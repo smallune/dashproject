@@ -1,3 +1,5 @@
+# AI Assistance: ChatGPT explained how to change the host for deployment on Render.
+
 from dash import Dash, dcc, html
 import dash
 import dash_bootstrap_components as dbc
@@ -17,16 +19,15 @@ app.layout = html.Div([
             dbc.NavLink("Health Effects", href = "/page2", active = "exact"),
             dbc.NavLink("About us", href = "/page4", active = "exact")
         ], 
-        brand = "Energy Drink App"
+        brand = "Energy Drink Dashboard"
     ),
     dash.page_container
 ])
 
-#"Yes"
-
 # if __name__ == "__main__":
 #     app.run(debug = True)
 
+# Render sets $PORT
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8050))  # Render sets $PORT
-    app.run(host="0.0.0.0", port=port, debug=False)
+    port = int(os.environ.get("PORT", 8050))
+    app.run(host = "0.0.0.0", port = port, debug = False)

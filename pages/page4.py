@@ -73,5 +73,5 @@ layout = html.Div(
                 )
             )
         ])
-    ]
+    ], className = "page-padding"
 )

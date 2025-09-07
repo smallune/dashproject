@@ -1,3 +1,11 @@
+# AI Assistance: used ChatGPT to help brainstorm how to
+# best vizualize trends in sales data over time. CoPilot within
+# VSCode was used to help write the layout and callback code, and helped
+# with dataset filtering syntax. For additional layout syntax assistance, 
+# the CoPilot "tab" auto-complete feature was useful. All layout and visualization
+# elements structured by gen AI were reviewed, understood, and revised to
+# better suit our project direction.
+
 import dash
 from dash import html, dcc, Input, Output, callback
 import kagglehub
@@ -16,29 +24,30 @@ df = pd.read_csv(f"{path}/soft_drink_sales.csv")
 df["Purchase Date"] = pd.to_datetime(df["Purchase Date"])
 df_energydrinks = df[df["Product"] == "Energy Drink"]
 
-# sorted list of state and brand names for vizualization
+# sorted list of states for vizualization
 states = sorted(df_energydrinks["Customer State"].unique())
 
 layout = html.Div([
     
     html.H2("Sales Data", className="centered-header"),
     
+    # dbc.Alert("Use dropdown to select state.", 
+    #           color = "secondary", 
+    #           className = "centered-header", 
+    #           style = {"width": "25%", "margin": "0 auto", "marginBottom": "20px"}),
+    
     dcc.Dropdown(
         id = "state-dropdown",
         options = [{"label": state, "value": state} for state in states],
-        value = states[0],
+        #value = states[0],
         clearable = False,
-        style = {"width": "50%", "margin": "0 auto", "marginBottom": "40px"}
+        style = {"width": "50%", "margin": "0 auto", "marginBottom": "20px"},
+        placeholder = "Select a state"
     ),
     
     dbc.Row([
         
         dbc.Col([
-            
-            # dbc.Alert([
-            #     html.H4("Unit Sales"),
-            #     html.P("Use dropdown to visualize state energy drink sales by quarter."),
-            # ], color = "secondary"),
             
             dcc.Graph(id = "units-sold-graph"),
                 
@@ -46,14 +55,14 @@ layout = html.Div([
                 dbc.CardBody(html.P([
                     "Sales data sourced from Kaggle. ",
                     html.A("View Dataset", href = "https://www.kaggle.com/datasets/prasadahirekar/soft-drink-sales", target="_blank")
-                ], style = {"textAlign": "center", "marginTop": "20px", "fontSize": "14px"}))
+                ], style = {"textAlign": "center", "margin": "20px", "fontSize": "14px"}))
             )
                 
         ], width = 8)
         
-    ], justify = "center", align = "start"),
+    ], justify = "center", align = "start", className = "swell"),
     
-], className = "swell page-padding")
+], className = "page-padding")
 
 @callback(
     Output("units-sold-graph", "figure"),
@@ -73,13 +82,6 @@ def update_graphs(state):
         title = f"Energy Drink Units Sold Per Quarter in {state}"
     )
     
-    sales.update_layout(xaxis_title="Period", yaxis_title="Units Sold")
+    sales.update_layout(xaxis_title = "Period", yaxis_title = "Units Sold", plot_bgcolor = "white")
 
     return sales
-
-
-# AI Assistance: used ChatGPT to help brainstorming how to
-# best vizualize trends in sales data over time. CoPilot within
-# VSCode was used to help write the layout and callback code.
-# For vizualization syntax assistance, the CoPilot "tab" auto-complete
-# feature was useful. 
