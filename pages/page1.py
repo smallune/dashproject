@@ -4,7 +4,7 @@
 # with dataset filtering syntax. For additional layout syntax assistance, 
 # the CoPilot "tab" auto-complete feature was useful. All layout and visualization
 # elements structured by gen AI were reviewed, understood, and revised to
-# better suit our project direction.
+# better suit our project direction and visual preferences.
 
 import dash
 from dash import html, dcc, Input, Output, callback
@@ -39,7 +39,7 @@ layout = html.Div([
     dcc.Dropdown(
         id = "state-dropdown",
         options = [{"label": state, "value": state} for state in states],
-        #value = states[0],
+        value = "Virginia",
         clearable = False,
         style = {"width": "50%", "margin": "0 auto", "marginBottom": "20px"},
         placeholder = "Select a state"
