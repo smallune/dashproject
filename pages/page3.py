@@ -23,8 +23,7 @@ layout = html.Div(
         dcc.Tab(label = 'Monster', value = 'Monster'),
         dcc.Tab(label = 'Rockstar', value = 'Rockstar'),
         dcc.Tab(label = '5-hour Energy', value = '5-hour Energy'),
-        dcc.Tab(label = 'Bang', value = 'Bang'),
-        dcc.Tab(label = 'Celsius', value = 'Celsius')
+        dcc.Tab(label = 'Bang', value = 'Bang')
     ]),
     dcc.Slider(
         id = 'year-slider',
@@ -46,50 +45,47 @@ layout = html.Div(
     Input('tab_product','value'),
     Input('year-slider', 'value'),
 )
-
+    
 def update_map_trends(kw_list, selected_year):
     # Get data from Google Trends
     # Specify the timeframe from the selected year with slider
     time_range = f'{selected_year}-01-01 {selected_year}-12-31'
-    # Add error handling for Google trends connection issues
+    error_message = ''
     try:
         pytrends.build_payload([kw_list], cat=0, timeframe= time_range, geo='US', gprop='')
         df = pytrends.interest_by_region(resolution='REGION', inc_low_vol=True, inc_geo_code=False)
-    
-        # Clean dataframe
-        df = df.reset_index()
-        df['year'] = selected_year
-        df.columns = ['region', 'Interest over time', 'year']
-        df = pd.merge(df, df_us_region_mapping, left_on='region', right_on = 'region_name', how='left')
-        df = df[['region_code', 'Interest over time', 'year']]
-        
-        fig = px.choropleth(
-            df,
-            locations = 'region_code',
-            locationmode = 'USA-states',
-            color = 'Interest over time',
-            scope = 'usa',
-            color_continuous_scale = 'tealrose',
-            labels = {'price': 'Price (cents/kWh)'},
-            title = f'Interest in {kw_list} over {selected_year} - from Google Trends'
-        )
-        fig.update_layout(
-            geo = dict(bgcolor = '#336b64'), ## background color around map
-            paper_bgcolor = '#113631',
-            font_color = '#ffffff',
-            margin = dict(l = 10, r = 10, t = 50, b = 20)   
-        )
-        return dcc.Graph(figure=fig)
     except Exception as e:
         # Catch any other unexpected errors
-        error_message = f"An unexpected error occurred: {e}. Please try again later or change network."
-        return dbc.Alert(
-            [
-                html.I(className="bi bi-x-octagon-fill me-2"),
-                error_message,
-            ],
-            color="danger",
-            className="d-flex align-items-center",
-        )
+        error_message = f"Acutally an unexpected error occurred: {e}. We are using downloaded data instead."
+        df = pd.read_csv(f'data/gg_trends/{selected_year}/{selected_year}_{kw_list}.csv')
+        df = df.iloc[1:]
+    
+    # Clean dataframe
+    df = df.reset_index()
+    df['year'] = selected_year
+    df.columns = ['region', 'Interest over time', 'year']
+    df = pd.merge(df, df_us_region_mapping, left_on='region', right_on = 'region_name', how='left')
+    df = df[['region_code', 'Interest over time', 'year']]
+    df['Interest over time'] = df['Interest over time'].fillna(0)
+    df['Interest over time'] = df['Interest over time'].astype('int64')
+        
+    fig = px.choropleth(
+        df,
+        locations = 'region_code',
+        locationmode = 'USA-states',
+        color = 'Interest over time',
+        scope = 'usa',
+        color_continuous_scale = 'PuBu',
+        labels = {'price': 'Price (cents/kWh)'},
+        title = f'Interest in {kw_list} over {selected_year} - from Google Trends {error_message}'
+    )
+    fig.update_layout(
+        geo = dict(), ## background color around map
+        # paper_bgcolor = '#113631',
+        # font_color = '#ffffff',
+        margin = dict(l = 10, r = 10, t = 50, b = 20)   
+    )
+    return dcc.Graph(figure=fig)
+
     
 # add end notes with sources
