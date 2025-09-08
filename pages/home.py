@@ -1,3 +1,6 @@
+# AI Assistance: ChatGPT helped with how to best use dbc cards in combination with
+# links to connect with the website's other pages.
+
 import dash
 from dash import html, dcc
 import dash_bootstrap_components as dbc
@@ -5,19 +8,56 @@ import dash_bootstrap_components as dbc
 dash.register_page(__name__, path = "/")
 
 layout = html.Div([
-    html.H2("Energy Drinks Dashboard", className = "centered-header"),
-    html.P("Team 14", className = "centered-header"),
     
-    html.Div([
-        html.P([
-            "This dashboard features a range of data visualizations related to recent consumption and effects of energy drinks in the US.",
-            html.Br(),
-            "Page 1: Sales data for PepsiCo and Coca-Cola brand energy drinks, visualizing the regional differences in sales trends over the past 5 years.",
-            html.Br(),
-            "Page 2: Health effects (TODO).",
-            html.Br(),
-            "Page 3: Demographics (TODO)."
-        ], className = "centered-paragraph")
-    ])
+    html.H2("Energy Drink Dashboard", className = "centered-header"),
+    html.P("Team 14", className = "centered-header"),
+    html.Hr(),
 
-])
+    dbc.Row([
+        
+        dbc.Col(
+            dcc.Link(
+                dbc.Card(
+                    dbc.CardBody([
+                        html.H4("Sales Data"),
+                        html.P("Click to explore sales data of energy drinks within the past 5 years")
+                    ]),
+                    className = "info-card"
+                ),
+                href = "/page1",
+                style = {"textDecoration": "none"}
+            ),
+            md = 4
+        ),
+
+        dbc.Col(
+            dcc.Link(
+                dbc.Card(
+                    dbc.CardBody([
+                        html.H4("Regional Popularity"),
+                        html.P("Click to compare the differences in brand popularity across the US")
+                    ]),
+                    className = "info-card"
+                ),
+                href = "/page3",
+                style = {"textDecoration": "none"}
+            ),
+            md = 4
+        ),
+
+        dbc.Col(
+            dcc.Link(
+                dbc.Card(
+                    dbc.CardBody([
+                        html.H4("Health Effects"),
+                        html.P("Click to see health data related to energy drink consumption")
+                    ]),
+                    className = "info-card"
+                ),
+                href = "/page2",
+                style = {"textDecoration": "none"}
+            ),
+            md = 4
+        ),
+    ], className = "swell"),
+], className = "page-padding")

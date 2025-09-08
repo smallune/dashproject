@@ -1,10 +1,16 @@
+<<<<<<< HEAD
 /* Page 2*/
+=======
+/* AI Assistance: ChatGPT helped to write hovering and swelling effects. 
+CoPilot auto-complete function assisted with padding and margin dimensions. */
+
+>>>>>>> b305a0f61d3b6134533e39a92296ceb1600e0b93
 .centered-header {
     text-align: center;
     padding: 16px;
 }
 
-.centered-header {
+.centered-paragraph {
     text-align: center;
     padding: 24px;
 }
@@ -13,6 +19,7 @@
     padding: 40px 60px;
 }
 
+<<<<<<< HEAD
 .w-120{
     width: 120px;
 }
@@ -40,3 +47,69 @@
 }
 
 /* buttons */
+=======
+.swell {
+  animation: swell 0.6s ease-out forwards;
+}
+
+.info-card {
+  display: inline-block;
+  margin: 18px;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  background-color: #F1F1F1;
+  transition: all 0.3s ease-in-out;
+  /* cursor: pointer; */
+}
+
+.info-card:hover {
+  background-color: #EDEEF0;
+  transform: scale(1.03);
+}
+
+.contact-info-card {
+  display: inline-block;
+  margin: 18px;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  background-color: #F1F1F1;
+  transition: all 0.3s ease-in-out;
+  /* cursor: pointer; */
+}
+
+.contact-info-card:hover {
+  background-color: #EDEEF0;
+  transform: scale(1.03);
+}
+
+.email-button {
+  background-color: #909090; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+@keyframes swell {
+
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+}
+>>>>>>> b305a0f61d3b6134533e39a92296ceb1600e0b93
