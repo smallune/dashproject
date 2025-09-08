@@ -1,5 +1,9 @@
+
+/* Page 2*/
+
 /* AI Assistance: ChatGPT helped to write hovering and swelling effects. 
 CoPilot auto-complete function assisted with padding and margin dimensions. */
+
 
 .centered-header {
     text-align: center;
@@ -14,6 +18,11 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
 .page-padding {
     padding: 40px 60px;
 }
+
+
+
+
+/* buttons */
 
 .swell {
   animation: swell 0.6s ease-out forwards;
@@ -51,6 +60,21 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
   transform: scale(1.03);
 }
 
+.email-button {
+  background-color: #909090; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
 @keyframes swell {
 
   0% {
@@ -64,3 +88,4 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
   }
 
 }
+

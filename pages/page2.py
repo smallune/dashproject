@@ -1,108 +1,170 @@
-#importing packages 
+#Importing packages (clean this up)
 import dash
 from dash import html, dcc, callback, Input, Output
 import pandas as pd
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import requests
+import matplotlib.pyplot as plt #might take out 
+import seaborn as sns #might take out 
 
-#registering the page 
+#Registering the page 
 dash.register_page(__name__, path = "/page2", name = "Health Effects")
 
-#add formatting 
+#ADD COMMENTS AND CHANGE STYLING/FORMATTING 
+#Make the reactions only the top 5 most common for each brand 
 
-#loading in API url and turning it into a dataframe 
-url = "https://api.fda.gov/food/event.json?search=products.name_brand:%22RED+BULL%22+OR+products.name_brand:%22MONSTER%22+OR+products.name_brand:%225+HOUR%22+OR+products.name_brand:%22BANG%22+OR+products.name_brand:%22ROCK+STAR%22&limit=1000"
-r = requests.get(url, timeout = 30)
+#Loading in API url  
+url = "https://api.fda.gov/food/event.json?search=products.name_brand:%22RED+BULL%22+OR+products.name_brand:%22MONSTER+ENERGY%22+OR+products.name_brand:%225+HOUR%22+OR+products.name_brand:%22BANG%22+OR+products.name_brand:%22C4%22+OR+products.name_brand:%22CELSIUS%22&limit=1000"
+r = requests.get(url, timeout = 100)
 r.raise_for_status()
 results = r.json()["results"]
 
-#filter what energy drinks and what reactions 
+#Determining what brands, reactions, and outcomes to filter for 
 energy_drinks_reactions = {
-    "name_brand": ["RED BULL", "MONSTER ENERGY DRINK", "ROCK STAR ENERGY DRINK", "5 HOUR ENERGY DRINK", "BANG ENERGY DRINK"],
-    "reactions": ["Blood pressure abnormal","HEART RATE INCREASED","Dizziness","ANXIETY","NERVOUSNESS","CHEST DISCOMFORT", "MYOCARDIAL INFARCTION","PALPITATIONS"]
+    "name_brand": ["RED BULL", "MONSTER ENERGY", "CELSIUS", "5 HOUR ENERGY", "C4"],
+    "reactions": ["Blood pressure","HEART RATE","Dizziness","ANXIETY","NERVOUSNESS","CHEST", "MYOCARDIAL INFARCTION","PALPITATIONS","DYSPNOEA", "STROKE", "CONVULSIONS","LOSS OF CONSCIOUSNESS"],
+    "outcomes": ["Hospitalization","Death","Life Threatening"]
 }
 
-#iterating over url to look at specific filters
+#Creating a dataframe that consolidates the information from the API
+#take out outcome and date 
 records = []
 for report in results:
     if "products" in report:
         for product in report["products"]:
             name_brand = product["name_brand"] if "name_brand" in product else ""
-            reactions = report["reactions"][0] if "reactions" in report and report["reactions"] else ""
-            date_created = report["date_created"] if "date_created" in report else ""
-            records.append({
-                "name_brand": name_brand,
-                "reactions": reactions,
-                "date_created": date_created
-            })
-df = pd.DataFrame(records)
+            if name_brand in energy_drinks_reactions["name_brand"]:
+                if "reactions" in report and report["reactions"]:
+                    for reaction in report["reactions"]:
+                        records.append({
+                            "name_brand": name_brand,
+                            "reactions": reaction})
 
-df["year"] = pd.to_datetime(df["date_created"], errors = "coerce").dt.year
-#df_energydrinks = df[df["name_brand"].isin(energy_drinks_reactions["name_brand"])]
-#df_reactions = df[df["reactions"].isin(energy_drinks_reactions["reactions"])]
+filtered_df = pd.DataFrame(records)
+filtered_df["reactions"] = filtered_df["reactions"].str.lower()
 
-filtered_records = [
-    row for _, row in df.iterrows()
-    if row["name_brand"] in energy_drinks_reactions["name_brand"]
-    and row["reactions"] in energy_drinks_reactions["reactions"]
-]
-filtered_df = pd.DataFrame(filtered_records)
+#Counting every reaction for each brand (might not need)
+brand_reaction_counts = {}
+for brand in filtered_df["name_brand"].unique():
+    brand_df = filtered_df[filtered_df["name_brand"] == brand]
+    reaction_counts = brand_df["reactions"].value_counts().to_dict()
+    brand_reaction_counts[brand] = reaction_counts
+# print(brand_reaction_counts)
+
+# Counting total reactions for each brand 
+total_brand_reactions = {}
+for brand in filtered_df["name_brand"].unique():
+    total_reactions_per_brand = sum(brand_reaction_counts[brand].values())
+    total_brand_reactions[brand] = total_reactions_per_brand
+
+total_reactions_df = pd.Series(total_brand_reactions).reset_index()
+total_reactions_df.columns = ["name_brand", "count_of_reactions"]
+#print(total_reactions_df)
+
 
 #Top bar
 navbar = html.Div([
    html.H1("Health Effects of Caffeinated Drinks", className = "centered-header") 
 ])
 
-#Left Column (Controls with Dropdown)
-layout = html.Div(
-    children = [
-        navbar,
-        html.H4("Select a Brand"),
-        dcc.Dropdown(
-            id = "brand",
-            options = [{"label": b, "value": b} for b in energy_drinks_reactions["name_brand"]],
-            value = "RED BULL",
-            clearable = False,
-            style = {"width": "100%"}),
-        dcc.Graph(id="graph")  
-], className = "page-padding")
-
-
-#Reaction count for each name brand 
-#def reactions_count(name_brand):
-   # reaction_counts = df.groupby("name_brand")["reactions"].value_counts()
-   # return reaction_counts
-
-#Chart 
-def updated_barchart(selected_brand, filtered_df):
-    brand_df = filtered_df[filtered_df["name_brand"] == selected_brand]
-    reactions_per_year = brand_df.groupby("year")["reactions"].count().reset_index()
-    figure = px.bar(
-        reactions_per_year,
-        x="year",
-        y="reactions",
-        title=f"Health Reactions Over Time for {selected_brand}",
-        labels={"year": "Year", "reactions": "Number of Reactions"},
-        template="plotly_white"
-    )
-    figure.update_layout(
-        xaxis_title="Year",
-        yaxis_title="Number of Reactions",
-        bargap=0.2, #change 
-        plot_bgcolor="#f9f9f9" #change 
-    )
-    return figure
+##Add dropdown that gives most common reaction for each brand 
+#Dropdown (left column)
+reactions = dbc.Card([
+        dbc.CardHeader("Reactions"),
+        dbc.CardBody(
+            [
+                dbc.Label("Select Energy Drink Brand"),
+                dcc.Dropdown(
+                    id="brand-dropdown",
+                    options=[{"label": k, "value": k} for k in brand_reaction_counts.keys()],
+                    value="RED BULL",
+                    clearable=False,
+                ),
+                html.Br(),
+                html.Div(id ="reaction-display"),
+                html.Hr(),
+                html.Small(
+                    "Data source: openfda.gov (no API key required).",
+                    className="text-muted",
+                ),
+            ])
+    ])
 
 @callback(
-    Output("graph", "figure"),
-    Input("brand", "value")
+    Output("reaction-display", "children"),
+    Input("brand-dropdown", "value")
 )
 
-def update_graph(selected_brand):
-    return updated_barchart(selected_brand, filtered_df)
+def update_reactions(selected_brand):
+    if selected_brand in brand_reaction_counts:
+        reactions = brand_reaction_counts[selected_brand]
+        reaction_list = [
+            html.Li(f"{reaction}: {count} reports")
+            for reaction, count in reactions.items()
+        ]
+        return [
+            html.H5(f"Reactions for {selected_brand}:"),
+            html.Ul(reaction_list)
+        ]
+    return "No reactions found for this brand."
 
-print(filtered_df.head(10))
+#Barplot
+#March 14 2025 was latest date August 11 2004 (over 20 years)
+brand_order = ["5 HOUR ENERGY", "RED BULL", "MONSTER ENERGY", "CELSIUS", "C4"]
+def create_figure():
+    fig = px.bar(
+        total_reactions_df,
+        x="count_of_reactions",
+        y="name_brand",
+        title="Energy Drink Reactions by Brand in the last 20 years",
+        color = "name_brand",
+        color_discrete_map = {
+            "5 HOUR ENERGY": "#424EF7",
+            "RED BULL": "#4F6FDA",
+            "MONSTER ENERGY": "#4F80DA",
+            "CELSIUS": "#4F94DA",
+            "C4": "#4F9EDA"
+        },
+        labels={"count_of_reactions": "Reaction Frequency", "name_brand": "Energy Drink Brand"},
+        category_orders={"name_brand": brand_order}
+    )
+    fig.update_layout(
+        showlegend=False,
+        plot_bgcolor="white",
+        xaxis=dict(gridcolor="lightgrey", gridwidth = 0.5),
+        title_x=0.5
+    )
+    
+    return fig
+
+#Layout
+layout = dbc.Container(
+    [
+        navbar,
+        dbc.Row(
+            [
+                # Left: chart (md=6)
+                dbc.Col(
+                    dbc.Card([
+                        dbc.CardHeader("Reactions by Energy Drink Brand"),
+                        dbc.CardBody(
+                            dcc.Graph(figure=create_figure())
+                        )
+                    ]),
+                    md=6),
+                # Right: reactions (md=6)
+                dbc.Col(reactions, md=6),
+            ],
+            className="g-4",    
+        ),
+        html.Footer(
+            html.Small(
+                "Built with Dash. Open data source: openfda.gov (no API key required).",
+                className="text-muted",
+            )),
+    ],
+    fluid=True, className="page-padding"
+)
 
 #add end notes with source
-            
