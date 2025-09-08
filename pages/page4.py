@@ -23,7 +23,7 @@ layout = html.Div(
                                     className="card-text",
                                 ),
                                 html.A(
-                                    html.Button('Contact me', id='email-button'),  # The button itself
+                                    html.Button('Contact me', id='email-button', className = 'email-button'),  # The button itself
                                     href='mailto:chsmall@wm.edu',
                                     target='_blank'  # Opens the email client in a new tab/window
                                 )
@@ -46,7 +46,7 @@ layout = html.Div(
                                     className="card-text",
                                 ),
                                 html.A(
-                                    html.Button('Contact me', id='email-button', className = 'centered-paragraph'),  # The button itself
+                                    html.Button('Contact me', id='email-button', className = 'email-button'),  # The button itself
                                     href='mailto:jdlevy@wm.edu',
                                     target='_blank'  # Opens the email client in a new tab/window
                                 )
@@ -69,7 +69,7 @@ layout = html.Div(
                                     className="card-text",
                                 ),
                                 html.A(
-                                    html.Button('Contact me', id='email-button', className = 'centered-paragraph'),  # The button itself
+                                    dbc.Button('Contact me', id='email-button', className = 'email-button'),  # The button itself
                                     href='mailto:tchirasittikor01@wm.edu',
                                     target='_blank'  # Opens the email client in a new tab/window
                                 )

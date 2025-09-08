@@ -51,6 +51,21 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
   transform: scale(1.03);
 }
 
+.email-button {
+  background-color: #909090; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
 @keyframes swell {
 
   0% {
