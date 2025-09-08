@@ -17,7 +17,6 @@ df_us_region_mapping = pd.read_csv(DataPath)
 layout = html.Div(
     style = {'backgroundColor': '#f9f9f9', 'padding': '10px'},
     children = [
-    html.H1('How do people search for energy drink by State', style = {'color': '#CDD6D3', 'textAlighn': 'center'}),
     html.H2("Demographic Data", className = "centered-header"),
     dcc.Tabs(id="tab_product", value='Red Bull', children=[
         dcc.Tab(label = 'Red Bull', value = 'Red Bull'),
@@ -52,6 +51,7 @@ def update_map_trends(kw_list, selected_year):
     # Get data from Google Trends
     # Specify the timeframe from the selected year with slider
     time_range = f'{selected_year}-01-01 {selected_year}-12-31'
+    # Add error handling for Google trends connection issues
     try:
         pytrends.build_payload([kw_list], cat=0, timeframe= time_range, geo='US', gprop='')
         df = pytrends.interest_by_region(resolution='REGION', inc_low_vol=True, inc_geo_code=False)
@@ -69,7 +69,7 @@ def update_map_trends(kw_list, selected_year):
             locationmode = 'USA-states',
             color = 'Interest over time',
             scope = 'usa',
-            color_continuous_scale = 'Reds',
+            color_continuous_scale = 'tealrose',
             labels = {'price': 'Price (cents/kWh)'},
             title = f'Interest in {kw_list} over {selected_year} - from Google Trends'
         )
@@ -83,7 +83,6 @@ def update_map_trends(kw_list, selected_year):
     except Exception as e:
         # Catch any other unexpected errors
         error_message = f"An unexpected error occurred: {e}. Please try again later or change network."
-        # return html.P(error_message, style={'color': 'red'})
         return dbc.Alert(
             [
                 html.I(className="bi bi-x-octagon-fill me-2"),
