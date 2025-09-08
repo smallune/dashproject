@@ -27,7 +27,7 @@ df_energydrinks = df[df["Product"] == "Energy Drink"]
 # sorted list of states for vizualization
 states = sorted(df_energydrinks["Customer State"].unique())
 
-layout = html.Div([
+layout = dbc.Container([
     
     html.H2("Sales Data", className="centered-header"),
     
@@ -58,11 +58,11 @@ layout = html.Div([
                 ], style = {"textAlign": "center", "margin": "20px", "fontSize": "14px"}))
             )
                 
-        ], width = 8)
+        ], style = {"maxWidth": "800px"})
         
     ], justify = "center", align = "start", className = "swell"),
     
-], className = "page-padding")
+], fluid = True, className = "page-padding")
 
 @callback(
     Output("units-sold-graph", "figure"),
