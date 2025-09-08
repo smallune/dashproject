@@ -30,7 +30,7 @@ layout = html.Div(
                             ]
                         ),
                     ],
-                    style={"width": "18rem"},
+                    className = 'contact-info-card'
                 )
             ),
             dbc.Col(
@@ -46,14 +46,14 @@ layout = html.Div(
                                     className="card-text",
                                 ),
                                 html.A(
-                                    html.Button('Contact me', id='email-button'),  # The button itself
+                                    html.Button('Contact me', id='email-button', className = 'centered-paragraph'),  # The button itself
                                     href='mailto:jdlevy@wm.edu',
                                     target='_blank'  # Opens the email client in a new tab/window
                                 )
                             ]
                         ),
                     ],
-                    style={"width": "18rem"},
+                    className = 'contact-info-card'
                 )
             ),
             dbc.Col(
@@ -69,14 +69,14 @@ layout = html.Div(
                                     className="card-text",
                                 ),
                                 html.A(
-                                    html.Button('Contact me', id='email-button'),  # The button itself
+                                    html.Button('Contact me', id='email-button', className = 'centered-paragraph'),  # The button itself
                                     href='mailto:tchirasittikor01@wm.edu',
                                     target='_blank'  # Opens the email client in a new tab/window
                                 )
                             ]
                         ),
                     ],
-                    style={"width": "18rem"},
+                    className = 'contact-info-card'
                 )
             )
         ])

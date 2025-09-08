@@ -35,6 +35,22 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
   transform: scale(1.03);
 }
 
+.contact-info-card {
+  display: inline-block;
+  margin: 18px;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  background-color: #F1F1F1;
+  transition: all 0.3s ease-in-out;
+  /* cursor: pointer; */
+}
+
+.contact-info-card:hover {
+  background-color: #EDEEF0;
+  transform: scale(1.03);
+}
+
 @keyframes swell {
 
   0% {
