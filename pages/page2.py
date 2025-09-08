@@ -5,8 +5,8 @@ import pandas as pd
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import requests
-import matplotlib.pyplot as plt
-import seaborn as sns 
+import matplotlib.pyplot as plt #might take out 
+import seaborn as sns #might take out 
 
 #Registering the page 
 dash.register_page(__name__, path = "/page2", name = "Health Effects")
@@ -16,7 +16,7 @@ dash.register_page(__name__, path = "/page2", name = "Health Effects")
 
 #Loading in API url  
 url = "https://api.fda.gov/food/event.json?search=products.name_brand:%22RED+BULL%22+OR+products.name_brand:%22MONSTER+ENERGY%22+OR+products.name_brand:%225+HOUR%22+OR+products.name_brand:%22BANG%22+OR+products.name_brand:%22C4%22+OR+products.name_brand:%22CELSIUS%22&limit=1000"
-r = requests.get(url, timeout = 30)
+r = requests.get(url, timeout = 100)
 r.raise_for_status()
 results = r.json()["results"]
 
@@ -82,14 +82,14 @@ reactions = dbc.Card([
                     clearable=False,
                 ),
                 html.Br(),
-                html.Div(id ="reaction-display", className= "mt-3"),
+                html.Div(id ="reaction-display"),
                 html.Hr(),
                 html.Small(
                     "Data source: openfda.gov (no API key required).",
                     className="text-muted",
                 ),
             ])
-    ],className="mb-5",)
+    ])
 
 @callback(
     Output("reaction-display", "children"),
@@ -105,7 +105,7 @@ def update_reactions(selected_brand):
         ]
         return [
             html.H5(f"Reactions for {selected_brand}:"),
-            html.Ul(reaction_list, className="list-unstyled")
+            html.Ul(reaction_list)
         ]
     return "No reactions found for this brand."
 
@@ -120,11 +120,11 @@ def create_figure():
         title="Energy Drink Reactions by Brand in the last 20 years",
         color = "name_brand",
         color_discrete_map = {
-            "5 HOUR ENERGY": "#7242F7",
-            "RED BULL": "#8965EA",
-            "MONSTER ENERGY": "#B195FF",
-            "CELSIUS": "#CEC3EF",
-            "C4": "#E6DEFC"
+            "5 HOUR ENERGY": "#424EF7",
+            "RED BULL": "#4F6FDA",
+            "MONSTER ENERGY": "#4F80DA",
+            "CELSIUS": "#4F94DA",
+            "C4": "#4F9EDA"
         },
         labels={"count_of_reactions": "Reaction Frequency", "name_brand": "Energy Drink Brand"},
         category_orders={"name_brand": brand_order}
@@ -162,11 +162,9 @@ layout = dbc.Container(
             html.Small(
                 "Built with Dash. Open data source: openfda.gov (no API key required).",
                 className="text-muted",
-            ),
-            className="mt-3",
-        ),
+            )),
     ],
-    fluid=True,
+    fluid=True, className="page-padding"
 )
 
 #add end notes with source
