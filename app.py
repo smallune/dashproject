@@ -8,6 +8,7 @@ import os
 # initialize app
 app = Dash(__name__, use_pages = True, suppress_callback_exceptions = True,
            external_stylesheets = [dbc.themes.YETI], title = "Energy Drink Trends")
+
 server = app.server # for deployment
 
 app.layout = html.Div([

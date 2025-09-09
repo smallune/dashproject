@@ -6,7 +6,14 @@ The web app has the most recent build deployed through Render at (https://dashpr
 
 Data sources: 
 
+<<<<<<< HEAD
 
 Page 2 API Openfda.gov ("https://api.fda.gov/food/event.json?search=products.name_brand:%22RED+BULL%22+OR+products.name_brand:%22MONSTER+ENERGY%22+OR+products.name_brand:%225+HOUR%22+OR+products.name_brand:%22BANG%22+OR+products.name_brand:%22C4%22+OR+products.name_brand:%22CELSIUS%22&limit=1000")
+=======
+MIT Licensed Sales Data: https://www.kaggle.com/datasets/prasadahirekar/soft-drink-sales
+Google Trends Data:
+Health Data:
+
+>>>>>>> ada948497ba539ab352c4d4a168feb8ce4728ea5
 
 Authors: Conner Small, Tai Chirasittikorn, Julia Levy
