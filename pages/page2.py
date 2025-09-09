@@ -97,7 +97,6 @@ reactions = dbc.Card([
                 html.Hr(),
                 html.Small(
                     "Data source: openfda.gov (no API key required).",
-                    className="text-muted",
                 ),
             ])
     ])
@@ -108,7 +107,7 @@ reactions = dbc.Card([
     Input("brand-dropdown", "value")
 )
 
-#Specifically get the reactions output for each brand when selected
+# Specifically get the reactions output for each brand when selected
 def update_reactions(selected_brand):
     if selected_brand in brand_reaction_counts:
         reactions = brand_reaction_counts[selected_brand]
@@ -122,8 +121,8 @@ def update_reactions(selected_brand):
         ]
     return "No reactions found for this brand."
 
-#Barplot (left column)
-#March 14 2025 was latest date August 11 2004 (over 20 years)
+# Barplot (left column)
+# March 14 2025 was latest date August 11 2004 (over 20 years)
 brand_order = ["5 HOUR ENERGY", "RED BULL", "MONSTER ENERGY", "CELSIUS", "C4"]
 def create_figure():
     fig = px.bar(
@@ -151,7 +150,7 @@ def create_figure():
     
     return fig
 
-#Layout which organizes the columns into the right places 
+# Layout which organizes the columns into the right places 
 layout = dbc.Container(
     [
         navbar,

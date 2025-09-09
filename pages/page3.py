@@ -9,8 +9,8 @@ register_page(__name__, path = '/page3', name = 'Demographics')
 
 pytrends = TrendReq(hl='en-US', tz=360)
 
-# Get US region mapping data
-## Downloaded from https://gist.github.com/rogerallen/1583593 then save to csv file
+# US region mapping data
+# Downloaded from https://gist.github.com/rogerallen/1583593 then save to csv file
 DataPath = Path(__file__).resolve().parent.parent / 'data' / 'us_region_mapping.csv'
 df_us_region_mapping = pd.read_csv(DataPath)
 
@@ -37,7 +37,7 @@ layout = html.Div(
         tooltip = {'placement': 'bottom', 'always_visible': True}
     ),
     html.Br(),
-    html.Div(id='choropleth-map') 
+    html.Div(id = 'choropleth-map') 
 ])
 
 @callback (
