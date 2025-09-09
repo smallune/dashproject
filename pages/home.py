@@ -8,7 +8,6 @@ import dash_bootstrap_components as dbc
 dash.register_page(__name__, path = "/")
 
 layout = html.Div([
-    
     html.H2("Energy Drink Dashboard", className = "home-header"),
     html.P("Team 14", className = "home-header"),
     html.Hr(),
@@ -55,39 +54,6 @@ layout = html.Div([
                 style = {"textDecoration": "none"}
             ),
             md = 4
-        ),
-        dbc.Col(
-        [
-           dbc.Card(
-                dbc.CardBody([
-                    html.Img(src="static/images/product_brand/redbull.webp", className = 'product-image')
-                ], className = 'centered-row'),
-                className = "drink-info-card"
-            ),
-           dbc.Card(
-                dbc.CardBody([
-                    html.Img(src="static/images/product_brand/monster.webp", className = 'product-image')
-                ], className = 'centered-row'),
-                className = "drink-info-card"
-            ),
-           dbc.Card(
-                dbc.CardBody([
-                    html.Img(src="static/images/product_brand/bang.webp", className = 'product-image')
-                ], className = 'centered-row'),
-                className = "drink-info-card"
-            ),
-           dbc.Card(
-                dbc.CardBody([
-                    html.Img(src="static/images/product_brand/celsius.webp", className = 'product-image')
-                ], className = 'centered-row'),
-                className = "drink-info-card"
-            ),
-           dbc.Card(
-                dbc.CardBody([
-                    html.Img(src="static/images/product_brand/c4.png", className = 'product-image')
-                ], className = 'centered-row'),
-                className = "drink-info-card"
-            ),
-        ], style = {"align": "center"}),
-    ], className = "swell"),
+        )
+    ], className = "swell")
 ], className = "page-padding")

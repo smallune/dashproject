@@ -8,6 +8,10 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
     margin-bottom: 30px;
 }
 
+.no-scroll {
+  height: 90vh;
+}
+
 .home-header{
   text-align: center;
     padding: 16px;
@@ -26,6 +30,13 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
     width: 120px;
 }
 
+.footer {
+  position: relative;
+  bottom:0;
+  width: 100%;
+  align-items: center;
+}
+
 .centered-row {
     display: flex;
     justify-content: center;
@@ -35,10 +46,31 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
 }
 
 .product-image {
-    /* width: 50px; */
-    height: Auto;
+    height: 50vw;
+    background-position:Top;
     border-radius: 10px;
     margin-bottom: 20px;
+}
+
+.crop-image {
+    height: 100px; 
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+    align-items: Top;
+    border-radius: 10px;
+}
+
+.drink-info-card {
+  display: inline-block;
+  width: 15vw;
+  height: 50px;
+  margin: 18px;
+  text-decoration: none;
+  padding: 10px 20px;
+  transition: all 0.3s ease-in-out;
+  border: none !important;
+  cursor: pointer;
 }
 
 /* buttons */
@@ -60,16 +92,6 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
 .info-card:hover {
   background-color: #EDEEF0;
   transform: scale(1.03);
-}
-
-.drink-info-card {
-  display: inline-block;
-  margin: 18px;
-  text-decoration: none;
-  padding: 10px 20px;
-  transition: all 0.3s ease-in-out;
-  border: none !important;
-  /* cursor: pointer; */
 }
 
 .contact-info-card {

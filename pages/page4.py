@@ -14,8 +14,8 @@ register_page(__name__, path = '/page4', name = 'About us')
 layout = html.Div(
     children = [
         html.H1('About Us', style = {'textAlign': 'center'}),
-        html.P('This dashboard was created by Team 14 for the Competing Through BusAnalytics course at William & Mary.'),
-        html.P('We hope you find this dashboard informative and engaging!'),
+        html.H4('This dashboard was created by Team 14 for the Competing Through BusAnalytics course at William & Mary.', className = 'centered-paragraph'),
+        html.H4('We hope you find this dashboard informative and engaging!', className = 'centered-paragraph'),
         dbc.Row([  
             dbc.Col(
                 dbc.Card(
@@ -67,8 +67,7 @@ layout = html.Div(
                             [
                                 html.H4("Tai Chirasittikorn "),
                                 html.P(
-                                    "Some quick example text to build on the card title and "
-                                    "make up the bulk of the card's content.",
+                                    "\"Red Bull won’t give you wings, it might take your health instead.\""
                                 ),
                                 html.A(
                                     dbc.Button('Contact me', id='email-button', className = 'email-button'),
