@@ -5,10 +5,9 @@ health consequences, while also looking at the regional differences in sales and
 The web app has the most recent build deployed through Render at (https://dashproject-k4l6.onrender.com/).
 
 Data sources: 
-MIT Licensed Sales Data: https://www.kaggle.com/datasets/prasadahirekar/soft-drink-sales
-Google Trends Data:
-Health Data: ("https://api.fda.gov/food/event.json?search=products.name_brand:%22RED+BULL%22+OR+products.name_brand:%22MONSTER+ENERGY%22+OR+products.name_brand:%225+HOUR%22+OR+products.name_brand:%22BANG%22+OR+products.name_brand:%22C4%22+OR+products.name_brand:%22CELSIUS%22&limit=1000")
-
+MIT Licensed Sales Data: (https://www.kaggle.com/datasets/prasadahirekar/soft-drink-sales) <br>
+Google Trends Data: __ <br>
+Health Data: API Openfda.gov ("https://api.fda.gov/food/event.json?search=products.name_brand:%22RED+BULL%22+OR+products.name_brand:%22MONSTER+ENERGY%22+OR+products.name_brand:%225+HOUR%22+OR+products.name_brand:%22BANG%22+OR+products.name_brand:%22C4%22+OR+products.name_brand:%22CELSIUS%22&limit=1000") <br>
 
 Authors: Conner Small, Tai Chirasittikorn, Julia Levy
 

@@ -22,8 +22,7 @@ layout = html.Div(
                             [
                                 html.H4("Conner Small"),
                                 html.P(
-                                    "Some quick example text to build on the card title and "
-                                    "make up the bulk of the card's content.",
+                                    "\"Just drink water!\"",
                                 ),
                                 html.A(
                                     html.Button('Contact me', id='email-button', className = 'email-button'),
@@ -79,6 +78,6 @@ layout = html.Div(
                     className = 'contact-info-card'
                 )
             )
-        ])
+        ], className = 'swell'),
     ], className = "page-padding"
 )
