@@ -18,97 +18,95 @@ pytrends = TrendReq(hl='en-US', tz=360)
 DataPath = Path(__file__).resolve().parent.parent / 'data' / 'us_region_mapping.csv'
 df_us_region_mapping = pd.read_csv(DataPath)
 
-layout = html.Div(
-    className = 'page-padding',
-    children = [
-        html.H2("Demographic Data", className = "centered-header"),
-        dbc.Row([
-            # dbc.Col([
-            # dbc.Card(
-            #         dbc.CardBody([
-            #             html.Div([
-            #                 html.Img(src="static/images/product_brand/redbull.webp", className = 'product-image')
-            #             ], className = 'crop-image')
-            #         ], className = 'centered-row'),
-            #         className = "drink-info-card"
-            #     ),
-            # dbc.Card(
-            #         dbc.CardBody([
-            #             html.Div([
-            #                 html.Img(src="static/images/product_brand/monster.webp", className = 'product-image')
-            #             ], className = 'crop-image')
-            #         ], className = 'centered-row'),
-            #         className = "drink-info-card"
-            #     ),
-            # dbc.Card(
-            #         dbc.CardBody([
-            #             html.Div([
-            #                 html.Img(src="static/images/product_brand/bang.webp", className = 'product-image')
-            #             ], className = 'crop-image')
-            #         ], className = 'centered-row'),
-            #         className = "drink-info-card"
-            #     ),
-            # dbc.Card(
-            #         dbc.CardBody([
-            #             html.Div([
-            #                 html.Img(src="static/images/product_brand/celsius.webp", className = 'product-image')
-            #             ], className = 'crop-image')
-            #         ], className = 'centered-row'),
-            #         className = "drink-info-card"
-            #     ),
-            # dbc.Card(
-            #         dbc.CardBody([
-            #             html.Div([
-            #                 html.Img(src="static/images/product_brand/c4.png", className = 'product-image')
-            #             ], className = 'crop-image')
-            #         ], className = 'centered-row'),
-            #         className = "drink-info-card"
-            #     ),
-            # ], style = {"align": "center"}),
-            dcc.Tabs(id="tab_product", value='Red Bull' , children =
-                [
-                    dcc.Tab(label = 'Red Bull', value = 'Red Bull Energy Drink'),
-                    dcc.Tab(label = '5-hour', value = '5-hour Energy Drink'),
-                    dcc.Tab(label = 'Monster', value = 'Monster Energy Drink'),
-                    dcc.Tab(label = 'Celsius', value = 'Celsius Energy Drink'),
-                    dcc.Tab(label = 'C4', value = 'C4 Energy Drink'),
-                ],
-                className = 'content-box'
-            ),
-            dcc.Slider(
-                className = 'content-box',
-                id = 'year-slider',
-                min = 2015,
-                max = 2025,
-                value = 2025,
-                marks = {
-                    str(y): str(y) for y in range(2015, 2026)
-                },
-                step = None,
-                tooltip = {'placement': 'bottom', 'always_visible': True}
-            ),
-        ], className = 'centered-row page-padding'),
-        dbc.Row([
-            html.Div([
-                dcc.Loading(
-                    id="loading-spinner",
-                    type="graph",
-                    children = [
-                        html.Div(id="choropleth-map", style = {'width': '95vw'})
-                    ],
-                )
-            ], style = {'padding': '40px', 'align-items': 'center', 'justifyContent': 'center', 'display': 'flex'},
+layout = dbc.Container([
+    html.H2("Demographic Data", className = "centered-header"),
+    dbc.Row([
+        # dbc.Col([
+        # dbc.Card(
+        #         dbc.CardBody([
+        #             html.Div([
+        #                 html.Img(src="static/images/product_brand/redbull.webp", className = 'product-image')
+        #             ], className = 'crop-image')
+        #         ], className = 'centered-row'),
+        #         className = "drink-info-card"
+        #     ),
+        # dbc.Card(
+        #         dbc.CardBody([
+        #             html.Div([
+        #                 html.Img(src="static/images/product_brand/monster.webp", className = 'product-image')
+        #             ], className = 'crop-image')
+        #         ], className = 'centered-row'),
+        #         className = "drink-info-card"
+        #     ),
+        # dbc.Card(
+        #         dbc.CardBody([
+        #             html.Div([
+        #                 html.Img(src="static/images/product_brand/bang.webp", className = 'product-image')
+        #             ], className = 'crop-image')
+        #         ], className = 'centered-row'),
+        #         className = "drink-info-card"
+        #     ),
+        # dbc.Card(
+        #         dbc.CardBody([
+        #             html.Div([
+        #                 html.Img(src="static/images/product_brand/celsius.webp", className = 'product-image')
+        #             ], className = 'crop-image')
+        #         ], className = 'centered-row'),
+        #         className = "drink-info-card"
+        #     ),
+        # dbc.Card(
+        #         dbc.CardBody([
+        #             html.Div([
+        #                 html.Img(src="static/images/product_brand/c4.png", className = 'product-image')
+        #             ], className = 'crop-image')
+        #         ], className = 'centered-row'),
+        #         className = "drink-info-card"
+        #     ),
+        # ], style = {"align": "center"}),
+        dcc.Tabs(id="tab_product", value='Red Bull Energy Drink', children =
+            [
+                dcc.Tab(label = 'Red Bull', value = 'Red Bull Energy Drink'),
+                dcc.Tab(label = '5-hour', value = '5-hour Energy Drink'),
+                dcc.Tab(label = 'Monster', value = 'Monster Energy Drink'),
+                dcc.Tab(label = 'Celsius', value = 'Celsius Energy Drink'),
+                dcc.Tab(label = 'C4', value = 'C4 Energy Drink'),
+            ],
+            className = 'content-box'
         ),
-        ], className = 'centered-row page-padding'),
-        dbc.Row([
-            dbc.Card(
-                dbc.CardBody(html.P([
-                    "Regional data sourced from Google Trends. ",
-                    html.A("View Dataset", href = "https://trends.google.com/trends/explore?geo=US&q=Red%20Bull%20Energy%20drink,Monster%20Energy%20drink,5-hour%20Energy%20drink,Rockstar%20Energy%20drink,Bang%20Energy%20drink&hl=en", target="_blank")
-                ], style = {"textAlign": "center", "margin": "20px", "fontSize": "14px"}))
+        dcc.Slider(
+            className = 'content-box',
+            id = 'year-slider',
+            min = 2015,
+            max = 2025,
+            value = 2025,
+            marks = {
+                str(y): str(y) for y in range(2015, 2026)
+            },
+            step = None,
+            tooltip = {'placement': 'bottom', 'always_visible': True}
+        ),
+    ], className = 'centered-row page-padding'),
+    dbc.Row([
+        html.Div([
+            dcc.Loading(
+                id="loading-spinner",
+                type="graph",
+                children = [
+                    html.Div(id="choropleth-map", style = {'width': '95vw'})
+                ],
             )
-        ])
+        ], style = {'padding': '40px', 'align-items': 'center', 'justifyContent': 'center', 'display': 'flex'},
+    ),
+    ], className = 'centered-row page-padding'),
+    dbc.Row([
+        dbc.Card(
+            dbc.CardBody(html.P([
+                "Regional data sourced from Google Trends. ",
+                html.A("View Dataset", href = "https://trends.google.com/trends/explore?geo=US&q=Red%20Bull%20Energy%20drink,Monster%20Energy%20drink,5-hour%20Energy%20drink,Rockstar%20Energy%20drink,Bang%20Energy%20drink&hl=en", target="_blank")
+            ], style = {"textAlign": "center", "margin": "20px", "fontSize": "14px"}))
+        )
     ])
+], fluid = True, className = "page-padding")
 
 @callback (
     Output('choropleth-map', 'children'),
@@ -166,7 +164,7 @@ def update_map_trends(brand, selected_year):
                 pad=4,
                 autoexpand=True),
         autosize = True,
-        coloraxis_colorbar = dict(ticks = 'inside', orientation = 'h', y = -1, title=dict(text="Search Interest", side='top'))
+        coloraxis_colorbar = dict(ticks = 'inside', orientation = 'h', y = 1, title=dict(text="Search Interest", side='top'))
     )
 
     return dcc.Graph(figure=fig)
