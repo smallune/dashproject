@@ -21,7 +21,6 @@ df_us_region_mapping = pd.read_csv(DataPath)
 layout = html.Div(
     className = 'page-padding',
     children = [
-<<<<<<< HEAD
     html.H2("Demographic Data", className = "centered-header"),
     dcc.Tabs(id="tab_product", value='Red Bull', children=[
         dcc.Tab(label = 'Red Bull', value = 'Red Bull'),
@@ -44,38 +43,6 @@ layout = html.Div(
     html.Br(),
     html.Div(id = 'choropleth-map') 
 ])
-=======
-        html.H2("Demographic Data", className = "centered-header"),
-        dbc.Row([
-            dbc.Col([
-                dcc.Tabs(id="tab_product", value='Red Bull', children =
-                [
-                    dcc.Tab(label = 'Red Bull', value = 'Red Bull Energy Drink'),
-                    dcc.Tab(label = '5-hour', value = '5-hour Energy Drink'),
-                    dcc.Tab(label = 'Monster', value = 'Monster Energy Drink'),
-                    dcc.Tab(label = 'Celsius', value = 'Celsius Energy Drink'),
-                    dcc.Tab(label = 'C4', value = 'C4 Energy Drink'),
-                ],
-                className = 'content-box'
-            ),
-            dcc.Slider(
-                className = 'content-box',
-                id = 'year-slider',
-                min = 2015,
-                max = 2025,
-                value = 2025,
-                marks = {
-                    str(y): str(y) for y in range(2015, 2026)
-                },
-                step = None,
-                tooltip = {'placement': 'bottom', 'always_visible': True}
-            ),
-            html.Div(id='choropleth-map', className = 'content-box') 
-        ])
-    ])
-    ]
-)
->>>>>>> 5b17a08d99ee888fdb3467e2e85d0513caba939a
 
 @callback (
     Output('choropleth-map', 'children'),
