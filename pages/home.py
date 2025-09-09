@@ -14,6 +14,9 @@ layout = html.Div([
     html.Hr(),
 
     dbc.Row([
+        dbc.Col(
+            html.H3('Explore your drink!')
+        )
         
         dbc.Col(
             dcc.Link(
