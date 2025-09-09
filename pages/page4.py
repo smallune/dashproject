@@ -1,4 +1,7 @@
 # AI Assistance: ChatGPT helped generate our profile pictures to hold a product of enegy drinks.
+# Prompt used: "Make this person hold a bottle of red bull energy"
+# Prompt used: "Make this person hold a bottle of monster energy"
+# Prompt used: "Make this person hold a bottle of 5-hour energy"
 # AI Assistance: CoPilot helped with the instructions to make profile cards with email button directly to send email.
 
 

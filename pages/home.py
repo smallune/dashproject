@@ -56,5 +56,38 @@ layout = html.Div([
             ),
             md = 4
         ),
+        dbc.Col(
+        [
+           dbc.Card(
+                dbc.CardBody([
+                    html.Img(src="static/images/product_brand/redbull.webp", className = 'product-image')
+                ], className = 'centered-row'),
+                className = "drink-info-card"
+            ),
+           dbc.Card(
+                dbc.CardBody([
+                    html.Img(src="static/images/product_brand/monster.webp", className = 'product-image')
+                ], className = 'centered-row'),
+                className = "drink-info-card"
+            ),
+           dbc.Card(
+                dbc.CardBody([
+                    html.Img(src="static/images/product_brand/bang.webp", className = 'product-image')
+                ], className = 'centered-row'),
+                className = "drink-info-card"
+            ),
+           dbc.Card(
+                dbc.CardBody([
+                    html.Img(src="static/images/product_brand/celsius.webp", className = 'product-image')
+                ], className = 'centered-row'),
+                className = "drink-info-card"
+            ),
+           dbc.Card(
+                dbc.CardBody([
+                    html.Img(src="static/images/product_brand/c4.png", className = 'product-image')
+                ], className = 'centered-row'),
+                className = "drink-info-card"
+            ),
+        ], style = {"align": "center"}),
     ], className = "swell"),
 ], className = "page-padding")

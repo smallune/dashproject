@@ -23,8 +23,7 @@ layout = html.Div(
     children = [
         html.H2("Demographic Data", className = "centered-header"),
         dbc.Row([
-            dbc.Col([
-                dcc.Tabs(id="tab_product", value='Red Bull', children =
+            dcc.Tabs(id="tab_product", value='Red Bull', children =
                 [
                     dcc.Tab(label = 'Red Bull', value = 'Red Bull Energy Drink'),
                     dcc.Tab(label = '5-hour', value = '5-hour Energy Drink'),
@@ -46,11 +45,14 @@ layout = html.Div(
                 step = None,
                 tooltip = {'placement': 'bottom', 'always_visible': True}
             ),
-            html.Div(id='choropleth-map', className = 'content-box') 
-        ])
+            dcc.Loading(
+                id="loading-spinner",
+                type="graph", # or 'cube', 'circle', 'dot', 'default', 'custom'
+                children = html.Div(id="choropleth-map", className = 'content-box', style = {"maxWidth": "800px"})
+            )
+            # html.Div(id='choropleth-map', className = 'content-box', style = {"maxWidth": "800px"}) 
+        ], className = 'centered-row page-padding')
     ])
-    ]
-)
 
 @callback (
     Output('choropleth-map', 'children'),
@@ -68,6 +70,7 @@ def update_map_trends(brand, selected_year):
     try:
         pytrends.build_payload([brand], cat=0, timeframe= time_range, geo='US', gprop='')
         df = pytrends.interest_by_region(resolution='REGION', inc_low_vol=True, inc_geo_code=False)
+        print('api')
     except Exception as e:
         # Catch any other unexpected errors
         error_message = f"Acutally an unexpected error occurred: {e}. We are using downloaded data instead."
@@ -82,8 +85,11 @@ def update_map_trends(brand, selected_year):
     df.columns = ['region', 'Interest over time', 'year']
     df = pd.merge(df, df_us_region_mapping, left_on='region', right_on = 'region_name', how='left')
     df = df[['region_code', 'Interest over time', 'year']]
+    try:
+        df['Interest over time'] = df['Interest over time'].str.replace('<', '')
+    except:
+        pass
     df['Interest over time'] = df['Interest over time'].fillna(0)
-    df['Interest over time'] = df['Interest over time'].replace('<', '')
     df['Interest over time'] = df['Interest over time'].astype('int64')
         
     fig = px.choropleth(
@@ -94,12 +100,13 @@ def update_map_trends(brand, selected_year):
         scope = 'usa',
         color_continuous_scale = 'PuBu',
         labels = {'price': 'Price (cents/kWh)'},
-        title = f'Interest in {brand} over {selected_year} - Data source: Google Trends {error_message}'
+        title = f'Interest in {brand} over {selected_year}'
     )
     fig.update_layout(
         geo = dict(), ## background color around map
         # paper_bgcolor = '#113631',
         # font_color = '#ffffff',
+        autosize = False,
         margin = dict(l = 10, r = 10, t = 50, b = 20)   
     )
     return dcc.Graph(figure=fig)

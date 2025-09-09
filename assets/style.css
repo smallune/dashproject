@@ -27,6 +27,20 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
     width: 120px;
 }
 
+.centered-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.product-image {
+    /* width: 50px; */
+    height: Auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
 
 /* buttons */
 
@@ -48,6 +62,16 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
 .info-card:hover {
   background-color: #EDEEF0;
   transform: scale(1.03);
+}
+
+.drink-info-card {
+  display: inline-block;
+  margin: 18px;
+  text-decoration: none;
+  padding: 10px 20px;
+  transition: all 0.3s ease-in-out;
+  border: none !important;
+  /* cursor: pointer; */
 }
 
 .contact-info-card {
@@ -100,4 +124,5 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
   }
 
 }
+
 
