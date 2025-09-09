@@ -12,12 +12,7 @@ layout = html.Div([
     html.H2("Energy Drink Dashboard", className = "centered-header"),
     html.P("Team 14", className = "centered-header"),
     html.Hr(),
-
     dbc.Row([
-        dbc.Col(
-            html.H3('Explore your drink!')
-        )
-        
         dbc.Col(
             dcc.Link(
                 dbc.Card(
@@ -32,7 +27,6 @@ layout = html.Div([
             ),
             md = 4
         ),
-
         dbc.Col(
             dcc.Link(
                 dbc.Card(
