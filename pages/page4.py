@@ -44,8 +44,7 @@ layout = html.Div(
                             [
                                 html.H4("Julia Levy"),
                                 html.P(
-                                    "Some quick example text to build on the card title and "
-                                    "make up the bulk of the card's content.",
+                                    "\"Don't have a 5-Hour Extra Strength in your hand like I do!\"",
                                 ),
                                 html.A(
                                     html.Button('Contact me', id='email-button', className = 'email-button'),

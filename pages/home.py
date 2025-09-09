@@ -9,8 +9,8 @@ dash.register_page(__name__, path = "/")
 
 layout = html.Div([
     
-    html.H2("Energy Drink Dashboard", className = "centered-header"),
-    html.P("Team 14", className = "centered-header"),
+    html.H2("Energy Drink Dashboard", className = "home-header"),
+    html.P("Team 14", className = "home-header"),
     html.Hr(),
     dbc.Row([
         dbc.Col(
