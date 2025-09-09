@@ -98,11 +98,8 @@ reactions = dbc.Card([
     Input("brand-dropdown", "value")
 )
 
-<<<<<<< HEAD
 # Function used in output of dropdown of reactions report 
-=======
 # Specifically get the reactions output for each brand when selected
->>>>>>> ada948497ba539ab352c4d4a168feb8ce4728ea5
 def update_reactions(selected_brand):
     if selected_brand in brand_reaction_counts:
         reactions = brand_reaction_counts[selected_brand]
@@ -116,13 +113,10 @@ def update_reactions(selected_brand):
         ]
     return "No reactions found for this brand."
 
-<<<<<<< HEAD
 # Overall Reaction Barchart Graphic (Left column)
 # Note about dates: March 14 2025 was latest date, August 11 2004 was earliest date so categorize as over 20 years
-=======
 # Barplot (left column)
 # March 14 2025 was latest date August 11 2004 (over 20 years)
->>>>>>> ada948497ba539ab352c4d4a168feb8ce4728ea5
 brand_order = ["5 HOUR ENERGY", "RED BULL", "MONSTER ENERGY", "CELSIUS", "C4"]
 def create_figure():
     fig = px.bar(
