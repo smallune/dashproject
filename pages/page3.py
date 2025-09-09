@@ -28,7 +28,7 @@ layout = html.Div(
                 [
                     dcc.Tab(label = 'Red Bull', value = 'Red Bull Energy Drink'),
                     dcc.Tab(label = '5-hour', value = '5-hour Energy Drink'),
-                    dcc.Tab(label = 'Monster', value = 'Monster Engergy Drink'),
+                    dcc.Tab(label = 'Monster', value = 'Monster Energy Drink'),
                     dcc.Tab(label = 'Celsius', value = 'Celsius Energy Drink'),
                     dcc.Tab(label = 'C4', value = 'C4 Energy Drink'),
                 ],
