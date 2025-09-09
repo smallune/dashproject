@@ -6,4 +6,9 @@ The web app has the most recent build deployed through Render at (https://dashpr
 
 Data sources: 
 
+MIT Licensed Sales Data: https://www.kaggle.com/datasets/prasadahirekar/soft-drink-sales
+Google Trends Data:
+Health Data:
+
+
 Authors: Conner Small, Tai Chirasittikorn, Julia Levy
