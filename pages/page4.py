@@ -23,16 +23,14 @@ layout = html.Div(
                         dbc.CardImg(src="static/images/Small_Conner.png", top=True),
                         dbc.CardBody(
                             [
-                                html.H4("Conner Small", className="card-title"),
+                                html.H4("Conner Small"),
                                 html.P(
-                                    "Some quick example text to build on the card title and "
-                                    "make up the bulk of the card's content.",
-                                    className="card-text",
+                                    "\"Just drink water!\"",
                                 ),
                                 html.A(
-                                    html.Button('Contact me', id='email-button', className = 'email-button'),  # The button itself
-                                    href='mailto:chsmall@wm.edu',
-                                    target='_blank'  # Opens the email client in a new tab/window
+                                    html.Button('Contact me', id='email-button', className = 'email-button'),
+                                    href = 'mailto:chsmall@wm.edu',
+                                    target = '_blank'
                                 )
                             ]
                         ),
@@ -46,16 +44,14 @@ layout = html.Div(
                         dbc.CardImg(src="static/images/Levy_Julia.png", top=True),
                         dbc.CardBody(
                             [
-                                html.H4("Julia Levy", className="card-title"),
+                                html.H4("Julia Levy"),
                                 html.P(
-                                    "Some quick example text to build on the card title and "
-                                    "make up the bulk of the card's content.",
-                                    className="card-text",
+                                    "\"Don't have a 5-Hour Extra Strength in your hand like I do!\"",
                                 ),
                                 html.A(
-                                    html.Button('Contact me', id='email-button', className = 'email-button'),  # The button itself
-                                    href='mailto:jdlevy@wm.edu',
-                                    target='_blank'  # Opens the email client in a new tab/window
+                                    html.Button('Contact me', id='email-button', className = 'email-button'),
+                                    href = 'mailto:jdlevy@wm.edu',
+                                    target = '_blank'
                                 )
                             ]
                         ),
@@ -69,16 +65,15 @@ layout = html.Div(
                         dbc.CardImg(src="static/images/Chirasittikon_Tai.png", top=True),
                         dbc.CardBody(
                             [
-                                html.H4("Tai Chirasittikorn ", className="card-title"),
+                                html.H4("Tai Chirasittikorn "),
                                 html.P(
                                     "Some quick example text to build on the card title and "
                                     "make up the bulk of the card's content.",
-                                    className="card-text",
                                 ),
                                 html.A(
-                                    dbc.Button('Contact me', id='email-button', className = 'email-button'),  # The button itself
+                                    dbc.Button('Contact me', id='email-button', className = 'email-button'),
                                     href='mailto:tchirasittikor01@wm.edu',
-                                    target='_blank'  # Opens the email client in a new tab/window
+                                    target='_blank'
                                 )
                             ]
                         ),
@@ -86,6 +81,6 @@ layout = html.Div(
                     className = 'contact-info-card'
                 )
             )
-        ])
+        ], className = 'swell'),
     ], className = "page-padding"
 )

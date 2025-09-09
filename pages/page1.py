@@ -29,12 +29,7 @@ states = sorted(df_energydrinks["Customer State"].unique())
 
 layout = dbc.Container([
     
-    html.H2("Sales Data", className="centered-header"),
-    
-    # dbc.Alert("Use dropdown to select state.", 
-    #           color = "secondary", 
-    #           className = "centered-header", 
-    #           style = {"width": "25%", "margin": "0 auto", "marginBottom": "20px"}),
+    html.H2("Regional Sales Performance", className = "centered-header"),
     
     dcc.Dropdown(
         id = "state-dropdown",

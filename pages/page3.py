@@ -13,8 +13,8 @@ register_page(__name__, path = '/page3', name = 'Demographics')
 
 pytrends = TrendReq(hl='en-US', tz=360)
 
-# Get US region mapping data
-## Downloaded from https://gist.github.com/rogerallen/1583593 then save to csv file
+# US region mapping data
+# Downloaded from https://gist.github.com/rogerallen/1583593 then save to csv file
 DataPath = Path(__file__).resolve().parent.parent / 'data' / 'us_region_mapping.csv'
 df_us_region_mapping = pd.read_csv(DataPath)
 
@@ -23,7 +23,49 @@ layout = html.Div(
     children = [
         html.H2("Demographic Data", className = "centered-header"),
         dbc.Row([
-            dcc.Tabs(id="tab_product", value='Red Bull', children =
+            # dbc.Col([
+            # dbc.Card(
+            #         dbc.CardBody([
+            #             html.Div([
+            #                 html.Img(src="static/images/product_brand/redbull.webp", className = 'product-image')
+            #             ], className = 'crop-image')
+            #         ], className = 'centered-row'),
+            #         className = "drink-info-card"
+            #     ),
+            # dbc.Card(
+            #         dbc.CardBody([
+            #             html.Div([
+            #                 html.Img(src="static/images/product_brand/monster.webp", className = 'product-image')
+            #             ], className = 'crop-image')
+            #         ], className = 'centered-row'),
+            #         className = "drink-info-card"
+            #     ),
+            # dbc.Card(
+            #         dbc.CardBody([
+            #             html.Div([
+            #                 html.Img(src="static/images/product_brand/bang.webp", className = 'product-image')
+            #             ], className = 'crop-image')
+            #         ], className = 'centered-row'),
+            #         className = "drink-info-card"
+            #     ),
+            # dbc.Card(
+            #         dbc.CardBody([
+            #             html.Div([
+            #                 html.Img(src="static/images/product_brand/celsius.webp", className = 'product-image')
+            #             ], className = 'crop-image')
+            #         ], className = 'centered-row'),
+            #         className = "drink-info-card"
+            #     ),
+            # dbc.Card(
+            #         dbc.CardBody([
+            #             html.Div([
+            #                 html.Img(src="static/images/product_brand/c4.png", className = 'product-image')
+            #             ], className = 'crop-image')
+            #         ], className = 'centered-row'),
+            #         className = "drink-info-card"
+            #     ),
+            # ], style = {"align": "center"}),
+            dcc.Tabs(id="tab_product", value='Red Bull' , children =
                 [
                     dcc.Tab(label = 'Red Bull', value = 'Red Bull Energy Drink'),
                     dcc.Tab(label = '5-hour', value = '5-hour Energy Drink'),
@@ -45,13 +87,27 @@ layout = html.Div(
                 step = None,
                 tooltip = {'placement': 'bottom', 'always_visible': True}
             ),
-            dcc.Loading(
-                id="loading-spinner",
-                type="graph", # or 'cube', 'circle', 'dot', 'default', 'custom'
-                children = html.Div(id="choropleth-map", className = 'content-box', style = {"maxWidth": "800px"})
+        ], className = 'centered-row page-padding'),
+        dbc.Row([
+            html.Div([
+                dcc.Loading(
+                    id="loading-spinner",
+                    type="graph",
+                    children = [
+                        html.Div(id="choropleth-map", style = {'width': '95vw'})
+                    ],
+                )
+            ], style = {'padding': '40px', 'align-items': 'center', 'justifyContent': 'center', 'display': 'flex'},
+        ),
+        ], className = 'centered-row page-padding'),
+        dbc.Row([
+            dbc.Card(
+                dbc.CardBody(html.P([
+                    "Regional data sourced from Google Trends. ",
+                    html.A("View Dataset", href = "https://trends.google.com/trends/explore?geo=US&q=Red%20Bull%20Energy%20drink,Monster%20Energy%20drink,5-hour%20Energy%20drink,Rockstar%20Energy%20drink,Bang%20Energy%20drink&hl=en", target="_blank")
+                ], style = {"textAlign": "center", "margin": "20px", "fontSize": "14px"}))
             )
-            # html.Div(id='choropleth-map', className = 'content-box', style = {"maxWidth": "800px"}) 
-        ], className = 'centered-row page-padding')
+        ])
     ])
 
 @callback (
@@ -100,16 +156,17 @@ def update_map_trends(brand, selected_year):
         scope = 'usa',
         color_continuous_scale = 'PuBu',
         labels = {'price': 'Price (cents/kWh)'},
-        title = f'Interest in {brand} over {selected_year}'
+        title = f'Interest in {brand} over {selected_year}',
+        range_color = [0, 100],
+
     )
     fig.update_layout(
-        geo = dict(), ## background color around map
-        # paper_bgcolor = '#113631',
-        # font_color = '#ffffff',
-        autosize = False,
-        margin = dict(l = 10, r = 10, t = 50, b = 20)   
+        geo = dict(),
+        margin = dict(l = 60, r = 60, t = 50, b = 50,
+                pad=4,
+                autoexpand=True),
+        autosize = True,
+        coloraxis_colorbar = dict(ticks = 'inside', orientation = 'h', y = -1, title=dict(text="Search Interest", side='top'))
     )
-    return dcc.Graph(figure=fig)
 
-    
-# add end notes with sources
+    return dcc.Graph(figure=fig)
