@@ -1,3 +1,7 @@
+# AI Assistance: Google search AI helped with dash Tabs component.
+# AI Assistance: CoPilot helped with the structure of the layout.
+# AI Assistance: ChatGPT helped with how to utilize Google Trends API to get regional data.
+
 from dash import html, dcc, Input, Output, callback, register_page
 import pandas as pd
 import dash_bootstrap_components as dbc
@@ -15,8 +19,9 @@ DataPath = Path(__file__).resolve().parent.parent / 'data' / 'us_region_mapping.
 df_us_region_mapping = pd.read_csv(DataPath)
 
 layout = html.Div(
-    style = {'backgroundColor': '#f9f9f9', 'padding': '10px'},
+    className = 'page-padding',
     children = [
+<<<<<<< HEAD
     html.H2("Demographic Data", className = "centered-header"),
     dcc.Tabs(id="tab_product", value='Red Bull', children=[
         dcc.Tab(label = 'Red Bull', value = 'Red Bull'),
@@ -39,6 +44,38 @@ layout = html.Div(
     html.Br(),
     html.Div(id = 'choropleth-map') 
 ])
+=======
+        html.H2("Demographic Data", className = "centered-header"),
+        dbc.Row([
+            dbc.Col([
+                dcc.Tabs(id="tab_product", value='Red Bull', children =
+                [
+                    dcc.Tab(label = 'Red Bull', value = 'Red Bull Energy Drink'),
+                    dcc.Tab(label = '5-hour', value = '5-hour Energy Drink'),
+                    dcc.Tab(label = 'Monster', value = 'Monster Energy Drink'),
+                    dcc.Tab(label = 'Celsius', value = 'Celsius Energy Drink'),
+                    dcc.Tab(label = 'C4', value = 'C4 Energy Drink'),
+                ],
+                className = 'content-box'
+            ),
+            dcc.Slider(
+                className = 'content-box',
+                id = 'year-slider',
+                min = 2015,
+                max = 2025,
+                value = 2025,
+                marks = {
+                    str(y): str(y) for y in range(2015, 2026)
+                },
+                step = None,
+                tooltip = {'placement': 'bottom', 'always_visible': True}
+            ),
+            html.Div(id='choropleth-map', className = 'content-box') 
+        ])
+    ])
+    ]
+)
+>>>>>>> 5b17a08d99ee888fdb3467e2e85d0513caba939a
 
 @callback (
     Output('choropleth-map', 'children'),
@@ -46,18 +83,22 @@ layout = html.Div(
     Input('year-slider', 'value'),
 )
     
-def update_map_trends(kw_list, selected_year):
+def update_map_trends(brand, selected_year):
     # Get data from Google Trends
     # Specify the timeframe from the selected year with slider
     time_range = f'{selected_year}-01-01 {selected_year}-12-31'
     error_message = ''
+    
+    # Sometimes Google Trends API fails, so we will use downloaded data instead. Because it detects as too many requests from the same IP.
     try:
-        pytrends.build_payload([kw_list], cat=0, timeframe= time_range, geo='US', gprop='')
+        pytrends.build_payload([brand], cat=0, timeframe= time_range, geo='US', gprop='')
         df = pytrends.interest_by_region(resolution='REGION', inc_low_vol=True, inc_geo_code=False)
     except Exception as e:
         # Catch any other unexpected errors
         error_message = f"Acutally an unexpected error occurred: {e}. We are using downloaded data instead."
-        df = pd.read_csv(f'data/gg_trends/{selected_year}/{selected_year}_{kw_list}.csv')
+        # Remove ' Energy Drink' word to match the file names
+        brand = brand.replace(' Energy Drink', '')
+        df = pd.read_csv(f'data/gg_trends/{selected_year}/{selected_year}_{brand}.csv')
         df = df.iloc[1:]
     
     # Clean dataframe
@@ -67,6 +108,7 @@ def update_map_trends(kw_list, selected_year):
     df = pd.merge(df, df_us_region_mapping, left_on='region', right_on = 'region_name', how='left')
     df = df[['region_code', 'Interest over time', 'year']]
     df['Interest over time'] = df['Interest over time'].fillna(0)
+    df['Interest over time'] = df['Interest over time'].replace('<', '')
     df['Interest over time'] = df['Interest over time'].astype('int64')
         
     fig = px.choropleth(
@@ -77,7 +119,7 @@ def update_map_trends(kw_list, selected_year):
         scope = 'usa',
         color_continuous_scale = 'PuBu',
         labels = {'price': 'Price (cents/kWh)'},
-        title = f'Interest in {kw_list} over {selected_year} - from Google Trends {error_message}'
+        title = f'Interest in {brand} over {selected_year} - Data source: Google Trends {error_message}'
     )
     fig.update_layout(
         geo = dict(), ## background color around map

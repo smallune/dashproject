@@ -1,3 +1,7 @@
+# AI Assistance: ChatGPT helped generate our profile pictures to hold a product of enegy drinks.
+# AI Assistance: CoPilot helped with the instructions to make profile cards with email button directly to send email.
+
+
 from dash import html, dcc, Input, Output, callback, register_page
 import dash_bootstrap_components as dbc
 from dash import html
@@ -13,7 +17,11 @@ layout = html.Div(
             dbc.Col(
                 dbc.Card(
                     [
+<<<<<<< HEAD
                         dbc.CardImg(src = "static/images/Small_Conner_H_250818005-2.jpg", top = True),
+=======
+                        dbc.CardImg(src="static/images/Small_Conner.png", top=True),
+>>>>>>> 5b17a08d99ee888fdb3467e2e85d0513caba939a
                         dbc.CardBody(
                             [
                                 html.H4("Conner Small"),
@@ -35,7 +43,11 @@ layout = html.Div(
             dbc.Col(
                 dbc.Card(
                     [
+<<<<<<< HEAD
                         dbc.CardImg(src="static/images/Levy_Julia_250818002-2.jpg", top = True),
+=======
+                        dbc.CardImg(src="static/images/Levy_Julia.png", top=True),
+>>>>>>> 5b17a08d99ee888fdb3467e2e85d0513caba939a
                         dbc.CardBody(
                             [
                                 html.H4("Julia Levy"),
@@ -57,7 +69,11 @@ layout = html.Div(
             dbc.Col(
                 dbc.Card(
                     [
+<<<<<<< HEAD
                         dbc.CardImg(src = "static/images/Chirasittikon_Tai_250818005.jpg", top = True),
+=======
+                        dbc.CardImg(src="static/images/Chirasittikon_Tai.png", top=True),
+>>>>>>> 5b17a08d99ee888fdb3467e2e85d0513caba939a
                         dbc.CardBody(
                             [
                                 html.H4("Tai Chirasittikorn "),

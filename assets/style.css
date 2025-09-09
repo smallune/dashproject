@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+=======
+/* Page 2*/
+/* AI Assistance: ChatGPT helped to write hovering and swelling effects. 
+CoPilot auto-complete function assisted with padding and margin dimensions. */
+
+
+/* Page 2*/
+
+>>>>>>> 5b17a08d99ee888fdb3467e2e85d0513caba939a
 /* AI Assistance: ChatGPT helped to write hovering and swelling effects. 
 CoPilot auto-complete function assisted with padding and margin dimensions. */
 
@@ -15,6 +25,14 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
     padding: 40px 60px;
 }
 
+<<<<<<< HEAD
+=======
+.w-120{
+    width: 120px;
+}
+
+
+>>>>>>> 5b17a08d99ee888fdb3467e2e85d0513caba939a
 /* buttons */
 
 .swell {
@@ -64,6 +82,12 @@ CoPilot auto-complete function assisted with padding and margin dimensions. */
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.content-box {
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 @keyframes swell {
