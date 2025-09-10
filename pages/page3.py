@@ -11,6 +11,7 @@ from pytrends.request import TrendReq
 
 register_page(__name__, path = '/page3', name = 'Demographics')
 
+# Google trends API setup
 pytrends = TrendReq(hl='en-US', tz=360)
 
 # US region mapping data
@@ -21,48 +22,6 @@ df_us_region_mapping = pd.read_csv(DataPath)
 layout = dbc.Container([
     html.H2("Demographic Data", className = "centered-header"),
     dbc.Row([
-        # dbc.Col([
-        # dbc.Card(
-        #         dbc.CardBody([
-        #             html.Div([
-        #                 html.Img(src="static/images/product_brand/redbull.webp", className = 'product-image')
-        #             ], className = 'crop-image')
-        #         ], className = 'centered-row'),
-        #         className = "drink-info-card"
-        #     ),
-        # dbc.Card(
-        #         dbc.CardBody([
-        #             html.Div([
-        #                 html.Img(src="static/images/product_brand/monster.webp", className = 'product-image')
-        #             ], className = 'crop-image')
-        #         ], className = 'centered-row'),
-        #         className = "drink-info-card"
-        #     ),
-        # dbc.Card(
-        #         dbc.CardBody([
-        #             html.Div([
-        #                 html.Img(src="static/images/product_brand/bang.webp", className = 'product-image')
-        #             ], className = 'crop-image')
-        #         ], className = 'centered-row'),
-        #         className = "drink-info-card"
-        #     ),
-        # dbc.Card(
-        #         dbc.CardBody([
-        #             html.Div([
-        #                 html.Img(src="static/images/product_brand/celsius.webp", className = 'product-image')
-        #             ], className = 'crop-image')
-        #         ], className = 'centered-row'),
-        #         className = "drink-info-card"
-        #     ),
-        # dbc.Card(
-        #         dbc.CardBody([
-        #             html.Div([
-        #                 html.Img(src="static/images/product_brand/c4.png", className = 'product-image')
-        #             ], className = 'crop-image')
-        #         ], className = 'centered-row'),
-        #         className = "drink-info-card"
-        #     ),
-        # ], style = {"align": "center"}),
         dcc.Tabs(id="tab_product", value='Red Bull Energy Drink', children =
             [
                 dcc.Tab(label = 'Red Bull', value = 'Red Bull Energy Drink'),
@@ -73,31 +32,31 @@ layout = dbc.Container([
             ],
             className = 'content-box'
         ),
+        html.P('Select Year:'),
         dcc.Slider(
-            className = 'content-box',
+            className = 'content-box responsive-slider',
             id = 'year-slider',
             min = 2015,
             max = 2025,
             value = 2025,
-            marks = {
-                str(y): str(y) for y in range(2015, 2026)
-            },
-            step = None,
-            tooltip = {'placement': 'bottom', 'always_visible': True}
+            marks = None,
+            step = 1,
+            tooltip = {'placement': 'bottom', 'always_visible': True},
+            
         ),
-    ], className = 'centered-row page-padding'),
+    ], className = 'centered-row'),
     dbc.Row([
         html.Div([
             dcc.Loading(
                 id="loading-spinner",
                 type="graph",
                 children = [
-                    html.Div(id="choropleth-map", style = {'width': '95vw'})
+                    html.Div(id="choropleth-map", style = {'width': '95vw', 'maxWidth': '800px'})
                 ],
             )
         ], style = {'padding': '40px', 'align-items': 'center', 'justifyContent': 'center', 'display': 'flex'},
     ),
-    ], className = 'centered-row page-padding'),
+    ], className = 'centered-row'),
     dbc.Row([
         dbc.Card(
             dbc.CardBody(html.P([
@@ -124,7 +83,6 @@ def update_map_trends(brand, selected_year):
     try:
         pytrends.build_payload([brand], cat=0, timeframe= time_range, geo='US', gprop='')
         df = pytrends.interest_by_region(resolution='REGION', inc_low_vol=True, inc_geo_code=False)
-        print('api')
     except Exception as e:
         # Catch any other unexpected errors
         error_message = f"Acutally an unexpected error occurred: {e}. We are using downloaded data instead."
@@ -154,9 +112,8 @@ def update_map_trends(brand, selected_year):
         scope = 'usa',
         color_continuous_scale = 'PuBu',
         labels = {'price': 'Price (cents/kWh)'},
-        title = f'Interest in {brand} over {selected_year}',
+        title = f'Search Interest of {brand} in {selected_year} by State',
         range_color = [0, 100],
-
     )
     fig.update_layout(
         geo = dict(),

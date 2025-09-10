@@ -20,22 +20,20 @@ app.layout = html.Div([
             dbc.NavLink("Health Effects", href = "/page2", active = "exact"),
             dbc.NavLink("About us", href = "/page4", active = "exact")
         ], 
-        brand = "Energy Drink Dashboard"
+        brand = "Energy Drink Dashboard",
+        brand_href = "/"
     ),
     dash.page_container,
-    # html.Footer([
-    #     html.Div([
-    #         html.Img(src="static/images/product_brand/redbull.webp", className = 'product-image'),
-    #         html.Img(src="static/images/product_brand/monster.webp", className = 'product-image'),
-    #         html.Img(src="static/images/product_brand/bang.webp", className = 'product-image'),
-    #         html.Img(src="static/images/product_brand/celsius.webp", className = 'product-image'),
-    #         html.Img(src="static/images/product_brand/c4.png", className = 'product-image')
-    #     ], className = 'crop-image'),
-    # ], className = "footer")
-], )
-
-# if __name__ == "__main__":
-#     app.run(debug = True)
+    html.Footer([
+        html.Div([
+            html.Img(src="static/images/product_brand/redbull.webp", className = 'product-image'),
+            html.Img(src="static/images/product_brand/monster.webp", className = 'product-image'),
+            html.Img(src="static/images/product_brand/bang.webp", className = 'product-image'),
+            html.Img(src="static/images/product_brand/celsius.webp", className = 'product-image'),
+            html.Img(src="static/images/product_brand/c4.png", className = 'product-image')
+        ], className = 'crop-image'),
+    ], className = "footer")
+], className = "flex-wrapper")
 
 # Render sets $PORT
 if __name__ == "__main__":
